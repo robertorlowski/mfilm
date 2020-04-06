@@ -4,12 +4,12 @@ import 'package:mfilm/util/mediaproviders.dart';
 import 'package:mfilm/util/navigator.dart';
 import 'package:mfilm/widgets/media_list/media_list.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage2 extends StatefulWidget {
   @override
   State createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage2> {
   PageController _pageController;
   int _page = 0;
   MediaType mediaType = MediaType.movie;

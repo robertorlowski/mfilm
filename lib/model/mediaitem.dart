@@ -1,7 +1,7 @@
 import 'package:mfilm/model/move.dart';
 import 'package:mfilm/util/utils.dart';
 
-enum MediaType { movie, show }
+enum MediaType { movie, show, hd }
 enum MovieType { CDA }
 
 class MediaItem {
@@ -30,8 +30,26 @@ class MediaItem {
         : DateTime.parse(releaseDate).year;
   }
 
-  factory MediaItem(Map jsonMap, MediaType type) =>
-      MediaItem._internalFromJson(jsonMap, type: type);
+  factory MediaItem(Map jsonMap, MediaType type, {bool db = false}) => db
+      ? MediaItem._internalFromDbJson(jsonMap, type: type)
+      : MediaItem._internalFromJson(jsonMap, type: type);
+
+  MediaItem._internalFromDbJson(Map jsonMap, {MediaType type: MediaType.movie})
+      : type = type,
+        id = jsonMap["id"].toInt(),
+        voteAverage = jsonMap["voteAverage"].toDouble(),
+        title = jsonMap["title"],
+        posterPath = jsonMap["posterPath"] ?? "",
+        backdropPath = jsonMap["backdropPath"] ?? "",
+        overview = jsonMap["overview"],
+        releaseDate = jsonMap["releaseDate"],
+        genreIds = (jsonMap["genres"] as List<dynamic>)
+            .map<int>((value) => value.toInt())
+            .toList(),
+        movieIds = (jsonMap["cdaIds"])
+            .map<Movie>((value) => new Movie("cda.pl", MovieType.CDA.toString(),
+                value["link"], value["title"]))
+            .toList();
 
   MediaItem._internalFromJson(Map jsonMap, {MediaType type: MediaType.movie})
       : type = type,

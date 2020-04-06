@@ -72,7 +72,9 @@ class MediaListItem extends StatelessWidget {
                     Hero(
                       child: FadeInImage.assetNetwork(
                         placeholder: "assets/placeholder.jpg",
-                        image: picture.getBackDropUrl(),
+                        image: (picture.backdropPath != ""
+                            ? picture.getBackDropUrl()
+                            : picture.getPosterUrl()),
                         fit: BoxFit.cover,
                         width: double.infinity,
                         height: 250.0,

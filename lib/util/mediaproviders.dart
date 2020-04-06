@@ -4,7 +4,7 @@ import 'package:mfilm/model/cast.dart';
 import 'package:mfilm/model/genres.dart';
 import 'package:mfilm/model/mediaitem.dart';
 import 'package:mfilm/model/video.dart';
-import 'package:mfilm/util/api_client.dart';
+import 'package:mfilm/util/api_client_mongo.dart';
 
 abstract class MediaProvider {
   Future<List<MediaItem>> loadMedia(String category, {int page: 1});
@@ -24,7 +24,7 @@ abstract class MediaProvider {
 class MovieProvider extends MediaProvider {
   MovieProvider();
 
-  ApiClient _apiClient = ApiClient();
+  ApiClientDb _apiClient = ApiClientDb();
 
   @override
   Future<List<MediaItem>> loadMedia(String category, {int page: 1}) {

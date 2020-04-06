@@ -32,6 +32,7 @@ class _MediaListState extends State<MediaList> {
         _pageNumber++;
       });
     } catch (e) {
+      print(e);
       _isLoading = false;
       if (_loadingState == LoadingState.LOADING) {
         setState(() => _loadingState = LoadingState.ERROR);

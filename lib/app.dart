@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mfilm/model/app_model.dart';
-import 'package:mfilm/widgets/home_page.dart';
+import 'package:mfilm/widgets/home_page%20copy.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class FilmApp extends StatelessWidget {
@@ -11,7 +11,7 @@ class FilmApp extends StatelessWidget {
       builder: (context, child, model) => MaterialApp(
         title: 'mFilm',
         theme: model.theme,
-        home: HomePage(),
+        home: HomePage2(),
       ),
     );
   }
