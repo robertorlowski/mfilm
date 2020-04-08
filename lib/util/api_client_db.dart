@@ -73,50 +73,6 @@ class ApiClientDb {
     }
   }
 
-  Future<List<Video>> getVideos(int movieId) async {
-    var url = Uri.https(baseUrl, '3/movie/$movieId/videos', {
-      'api_key': API_KEY,
-    });
-
-    return _getJson(url).then((json) => json['results']).then(
-        (data) => data.map<Video>((item) => Video.fromJson(item)).toList());
-  }
-
-  Future<List<Genres>> getGenres(String language) async {
-    var url = Uri.https(baseUrl, '3/genre/movie/list',
-        {'api_key': API_KEY, 'language': language});
-
-    return _getJson(url).then((json) => json['genres']).then(
-        (data) => data.map<Genres>((item) => Genres.fromJson(item)).toList());
-  }
-
-  Future<List<Actor>> getMediaCredits(int mediaId,
-      {String type: "movie"}) async {
-    var url =
-        Uri.https(baseUrl, '3/$type/$mediaId/credits', {'api_key': API_KEY});
-
-    return _getJson(url).then((json) =>
-        json['cast'].map<Actor>((item) => Actor.fromJson(item)).toList());
-  }
-
-  Future<dynamic> getMediaDetails(int mediaId, {String type: "movie"}) async {
-    var url = Uri.https(baseUrl, '3/$type/$mediaId', {'api_key': API_KEY});
-
-    return _getJson(url);
-  }
-
-  Future<List<MediaItem>> getMoviesForActor(int actorId) async {
-    var url = Uri.https(baseUrl, '3/discover/movie', {
-      'api_key': API_KEY,
-      'with_cast': actorId.toString(),
-      'sort_by': 'popularity.desc'
-    });
-
-    return _getJson(url).then((json) => json['results']).then((data) => data
-        .map<MediaItem>((item) => MediaItem(item, MediaType.video))
-        .toList());
-  }
-
   Future<List<SearchResult>> getSearchResults(String query) async {
     print("query: " + query);
     Db _db = await _mongoDb.getConnection();
@@ -143,5 +99,53 @@ class ApiClientDb {
     } finally {
       _mongoDb.closeConnection(_db);
     }
+  }
+
+  Future<List<Video>> getVideos(int movieId) async {
+    var url = Uri.https(baseUrl, '3/movie/$movieId/videos', {
+      'api_key': API_KEY,
+    });
+
+    return _getJson(url).then((json) => json['results']).then(
+        (data) => data.map<Video>((item) => Video.fromJson(item)).toList());
+  }
+
+  Future<List<Genres>> getGenres(String language) async {
+    var url = Uri.https(baseUrl, '3/genre/movie/list',
+        {'api_key': API_KEY, 'language': language});
+
+    return _getJson(url).then((json) => json['genres']).then(
+        (data) => data.map<Genres>((item) => Genres.fromJson(item)).toList());
+  }
+
+  Future<List<Actor>> getMediaCredits(int mediaId,
+      {String type: "movie"}) async {
+    var url =
+        Uri.https(baseUrl, '3/$type/$mediaId/credits', {'api_key': API_KEY});
+
+    return _getJson(url).then((json) =>
+        json['cast'].map<Actor>((item) => Actor.fromJson(item)).toList());
+  }
+
+  Future<dynamic> getMediaDetails(int mediaId,
+      {String type: "movie", language: 'en-US'}) async {
+    var url = Uri.https(baseUrl, '3/$type/$mediaId',
+        {'api_key': API_KEY, 'language': language});
+
+    return _getJson(url);
+  }
+
+  Future<List<MediaItem>> getMoviesForActor(int actorId,
+      {language: 'en-US'}) async {
+    var url = Uri.https(baseUrl, '3/discover/movie', {
+      'api_key': API_KEY,
+      'with_cast': actorId.toString(),
+      'sort_by': 'popularity.desc',
+      'language': language
+    });
+
+    return _getJson(url).then((json) => json['results']).then((data) => data
+        .map<MediaItem>((item) => MediaItem(item, MediaType.video))
+        .toList());
   }
 }

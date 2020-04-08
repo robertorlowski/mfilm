@@ -30,9 +30,8 @@ class AppModel extends Model {
 
   ThemeData get theme => _themes[_currentTheme];
 
-  List<MediaItem> get favoriteMovies => _favorites
-      .where((MediaItem item) => item.type == MediaType.video)
-      .toList();
+  List<MediaItem> favoriteMovies(MediaType mediaType) =>
+      _favorites.where((MediaItem item) => item.type == mediaType).toList();
 
   void setDefaultSortBy(String value) {
     _currentSortBy = value;

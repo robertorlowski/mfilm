@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mfilm/model/cast.dart';
+import 'package:mfilm/util/mediaproviders.dart';
 import 'package:mfilm/util/navigator.dart';
 import 'package:mfilm/util/styles.dart';
 import 'package:mfilm/widgets/component/bottom_gradient.dart';
@@ -8,13 +9,14 @@ class CastCard extends StatelessWidget {
   final double height;
   final double width;
   final Actor actor;
+  final MediaProvider provider;
 
-  CastCard(this.actor, {this.height: 140.0, this.width: 100.0});
+  CastCard(this.actor, this.provider, {this.height: 140.0, this.width: 100.0});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => goToActorDetails(context, actor),
+      onTap: () => goToActorDetails(context, actor, provider),
       child: Container(
         height: height,
         width: width,

@@ -51,7 +51,7 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
 
   void _loadGenres() async {
     try {
-      List<Genres> list = await widget.provider.loadGenres(sysLanguage);
+      List<Genres> list = await widget.provider.loadGenres();
       setState(() => _genresIds = list);
     } catch (e) {
       e.toString();
@@ -286,7 +286,7 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
                   ? Center(
                       child: CircularProgressIndicator(),
                     )
-                  : CastSection(_actorList)),
+                  : CastSection(_actorList, widget.provider)),
         ),
       ]),
     );

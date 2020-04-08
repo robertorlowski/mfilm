@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mfilm/model/mediaitem.dart';
 import 'package:mfilm/util/mediaproviders.dart';
 import 'package:mfilm/util/navigator.dart';
+import 'package:mfilm/util/utils.dart';
 import 'package:mfilm/widgets/media_list/media_list.dart';
 
 class HomePage2 extends StatefulWidget {
@@ -16,8 +17,8 @@ class HomePageState extends State<HomePage2> {
   int _page = 0;
   MediaType mediaType = MediaType.video;
 
-  final MediaProvider videoProvider = MovieProviderVideo();
-  final MediaProvider dbProvider = MovieProviderDb();
+  final MediaProvider videoProvider = MovieProviderVideo(sysLanguage);
+  final MediaProvider dbProvider = MovieProviderDb(sysLanguage);
 
   MediaProvider _getProvider() {
     switch (mediaType) {
@@ -37,7 +38,8 @@ class HomePageState extends State<HomePage2> {
           actions: <Widget>[
             IconButton(
                 icon: Icon(Icons.favorite, color: Colors.white),
-                onPressed: () => goToFavorites(context)),
+                onPressed: () =>
+                    goToFavorites(context, mediaType, _getProvider())),
             IconButton(
               icon: Icon(Icons.search, color: Colors.white),
               onPressed: () => goToSearch(context, _getProvider()),

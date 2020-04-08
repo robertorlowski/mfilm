@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mfilm/model/app_model.dart';
 import 'package:mfilm/model/mediaitem.dart';
+import 'package:mfilm/util/mediaproviders.dart';
 import 'package:mfilm/util/navigator.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class MediaListItem extends StatelessWidget {
-  MediaListItem(this.picture);
+  MediaListItem(this._picture, this._mediaProvider);
 
-  final MediaItem picture;
+  final MediaItem _picture;
+  final MediaProvider _mediaProvider;
 
   Widget _getTitleSection(BuildContext context) {
     return ScopedModelDescendant<AppModel>(
@@ -20,7 +22,7 @@ class MediaListItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          child: Text(picture.title,
+                          child: Text(_picture.title,
                               maxLines: 1,
                               style: Theme.of(context)
                                   .textTheme
@@ -45,9 +47,9 @@ class MediaListItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
                         InkWell(
-                          onTap: () => model.toggleFavorites(picture),
+                          onTap: () => model.toggleFavorites(_picture),
                           child: Icon(
-                            model.isItemFavorite(picture)
+                            model.isItemFavorite(_picture)
                                 ? Icons.favorite
                                 : Icons.favorite_border,
                             size: 20.0,
@@ -66,21 +68,22 @@ class MediaListItem extends StatelessWidget {
         builder: (context, child, AppModel model) => Card(
               margin: EdgeInsets.symmetric(horizontal: 2.0, vertical: 3.0),
               child: InkWell(
-                onTap: () => goToMovieDetails(context, picture),
+                onTap: () =>
+                    goToMovieDetails(context, _picture, _mediaProvider),
                 child: Stack(
                   children: <Widget>[
                     Hero(
                       child: FadeInImage.assetNetwork(
                         placeholder: "assets/placeholder.jpg",
-                        image: (picture.backdropPath != ""
-                            ? picture.getBackDropUrl()
-                            : picture.getPosterUrl()),
+                        image: (_picture.backdropPath != ""
+                            ? _picture.getBackDropUrl()
+                            : _picture.getPosterUrl()),
                         fit: BoxFit.cover,
                         width: double.infinity,
                         height: 250.0,
                         fadeInDuration: Duration(milliseconds: 50),
                       ),
-                      tag: "Movie-Tag-${picture.id}",
+                      tag: "Movie-Tag-${_picture.id}",
                     ),
                     /*
                     new Container(

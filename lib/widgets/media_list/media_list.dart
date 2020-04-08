@@ -61,7 +61,7 @@ class _MediaListState extends State<MediaList> {
                 _loadNextPage();
               }
 
-              return MediaListItem(_movies[index]);
+              return MediaListItem(_movies[index], widget.provider);
             });
       case LoadingState.ERROR:
         return Text('Sorry, there was an error loading the data!');

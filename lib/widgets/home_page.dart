@@ -22,8 +22,8 @@ class HomePageState extends State<HomePage> {
   String sortValue = moveSortBy.keys.first;
   List<Genres> genresList = [];
 
-  final MediaProvider videoProvider = MovieProviderVideo();
-  final MediaProvider dbProvider = MovieProviderDb();
+  final MediaProvider videoProvider = MovieProviderVideo(sysLanguage);
+  final MediaProvider dbProvider = MovieProviderDb(sysLanguage);
 
   MediaProvider _getProvider() {
     switch (mediaType) {
@@ -40,7 +40,7 @@ class HomePageState extends State<HomePage> {
       actions: <Widget>[
         IconButton(
             icon: Icon(Icons.favorite, color: Colors.white),
-            onPressed: () => goToFavorites(context)),
+            onPressed: () => goToFavorites(context, mediaType, _getProvider())),
         IconButton(
           icon: Icon(Icons.search, color: Colors.white),
           onPressed: () => goToSearch(context, _getProvider()),
@@ -176,7 +176,7 @@ class HomePageState extends State<HomePage> {
     setState(() => rowsMedia = []);
     List<Widget> lll = new List<Widget>();
     try {
-      List<Genres> list = await _getProvider().loadGenres(sysLanguage);
+      List<Genres> list = await _getProvider().loadGenres();
       for (Genres ggg in list) {
         lll.add(prepareList(new MainList(mediaType, [ggg], _getProvider())));
       }

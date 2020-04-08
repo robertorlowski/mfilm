@@ -11,8 +11,8 @@ import 'package:mfilm/widgets/search/search_page.dart';
 
 import 'mediaproviders.dart';
 
-goToMovieDetails(BuildContext context, MediaItem movie) {
-  MediaProvider provider = MovieProviderVideo();
+goToMovieDetails(
+    BuildContext context, MediaItem movie, MediaProvider provider) {
   _pushWidgetWithFade(context, MediaDetailScreen(movie, provider));
 }
 
@@ -24,16 +24,17 @@ goToMoviePlay(BuildContext context, Movie movie, MediaItem mediaItem) {
   }
 }
 
-goToActorDetails(BuildContext context, Actor actor) {
-  _pushWidgetWithFade(context, ActorDetailScreen(actor));
+goToActorDetails(BuildContext context, Actor actor, MediaProvider provider) {
+  _pushWidgetWithFade(context, ActorDetailScreen(actor, provider));
 }
 
 goToSearch(BuildContext context, MediaProvider provider) {
   _pushWidgetWithFade(context, SearchScreen(provider));
 }
 
-goToFavorites(BuildContext context) {
-  _pushWidgetWithFade(context, FavoriteScreen());
+goToFavorites(
+    BuildContext context, MediaType mediaType, MediaProvider provider) {
+  _pushWidgetWithFade(context, FavoriteScreen(mediaType, provider));
 }
 
 _pushWidgetWithFade(BuildContext context, Widget widget) {

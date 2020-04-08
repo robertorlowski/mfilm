@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mfilm/model/cast.dart';
 import 'package:mfilm/model/mediaitem.dart';
 import 'package:mfilm/util/api_client.dart';
+import 'package:mfilm/util/mediaproviders.dart';
 import 'package:mfilm/util/styles.dart';
 import 'package:mfilm/widgets/component/fitted_circle_avatar.dart';
 import 'package:mfilm/widgets/media_list/media_list_item.dart';
@@ -11,8 +12,9 @@ import 'package:mfilm/widgets/media_list/media_list_item.dart';
 class ActorDetailScreen extends StatelessWidget {
   final Actor _actor;
   final ApiClient _apiClient = ApiClient();
+  final MediaProvider _mediaProvider;
 
-  ActorDetailScreen(this._actor);
+  ActorDetailScreen(this._actor, this._mediaProvider);
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +80,7 @@ class ActorDetailScreen extends StatelessWidget {
         return snapshot.hasData
             ? ListView.builder(
                 itemBuilder: (BuildContext context, int index) =>
-                    MediaListItem(snapshot.data[index]),
+                    MediaListItem(snapshot.data[index], _mediaProvider),
                 itemCount: snapshot.data.length,
               )
             : Padding(

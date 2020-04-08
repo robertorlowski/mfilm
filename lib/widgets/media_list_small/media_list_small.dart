@@ -109,7 +109,7 @@ class _MediaListSmallState extends State<MediaListSmall> {
               if (!_isLoading && index > (_movies.length * 0.7)) {
                 _loadNextPage(sortBy);
               }
-              return MediaListSmallItem(_movies[index]);
+              return MediaListSmallItem(_movies[index], widget.provider);
             });
       case LoadingState.ERROR:
         return Text('Sorry, there was an error loading the data!');

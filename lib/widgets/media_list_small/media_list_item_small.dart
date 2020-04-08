@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:mfilm/model/app_model.dart';
 import 'package:mfilm/model/mediaitem.dart';
+import 'package:mfilm/util/mediaproviders.dart';
 import 'package:mfilm/util/navigator.dart';
 import 'package:mfilm/util/styles.dart';
 import 'package:mfilm/widgets/component/text_bubble.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class MediaListSmallItem extends StatelessWidget {
-  MediaListSmallItem(this.picture);
+  MediaListSmallItem(this.picture, this.provider);
 
   final MediaItem picture;
+  final MediaProvider provider;
+
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<AppModel>(
         builder: (context, child, AppModel model) => Container(
               margin: EdgeInsets.symmetric(horizontal: 2.0, vertical: 3.0),
               child: InkWell(
-                onTap: () => goToMovieDetails(context, picture),
+                onTap: () => goToMovieDetails(context, picture, provider),
                 child: Stack(
                   children: <Widget>[
                     FadeInImage.assetNetwork(

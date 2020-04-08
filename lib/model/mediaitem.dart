@@ -76,7 +76,22 @@ class MediaItem {
                 .toList(),
         movieIds = [];
 
-  Map toJson() => {
+  Map toJson() {
+    if (type == MediaType.db)
+      return {
+        'type': 2,
+        'id': id,
+        'voteAverage': voteAverage,
+        'title': title,
+        'posterPath': posterPath,
+        'backdropPath': backdropPath,
+        'overview': overview,
+        'releaseDate': releaseDate,
+        'genres': genreIds,
+        'site': videoIds,
+      };
+    else
+      return {
         'type': type == MediaType.video ? 1 : 0,
         'id': id,
         'vote_average': voteAverage,
@@ -88,8 +103,15 @@ class MediaItem {
         'genre_ids': genreIds,
         'site': videoIds,
       };
+  }
 
-  factory MediaItem.fromPrefsJson(Map jsonMap) => MediaItem._internalFromJson(
-      jsonMap,
-      type: (jsonMap['type'].toInt() == 1) ? MediaType.video : MediaType.show);
+  factory MediaItem.fromPrefsJson(Map jsonMap) {
+    if (jsonMap['type'].toInt() == 1) {
+      return MediaItem._internalFromJson(jsonMap, type: MediaType.video);
+    } else if (jsonMap['type'].toInt() == 0) {
+      return MediaItem._internalFromJson(jsonMap, type: MediaType.show);
+    } else {
+      return MediaItem._internalFromDbJson(jsonMap, type: MediaType.db);
+    }
+  }
 }

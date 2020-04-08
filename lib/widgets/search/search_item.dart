@@ -65,14 +65,14 @@ class SearchItemCard extends StatelessWidget {
   _handleTap(BuildContext context) {
     switch (item.mediaType) {
       case "db":
-        goToMovieDetails(context, item.asMovie(MediaType.db));
+        goToMovieDetails(context, item.asMovie(MediaType.db), provider);
         return;
       case "video":
       case "movie":
-        goToMovieDetails(context, item.asMovie(MediaType.video));
+        goToMovieDetails(context, item.asMovie(MediaType.video), provider);
         return;
       case "person":
-        goToActorDetails(context, item.asActor());
+        goToActorDetails(context, item.asActor(), provider);
     }
   }
 }

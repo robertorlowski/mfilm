@@ -20,7 +20,7 @@ abstract class MediaProvider {
 
   Future<List<Video>> loadVideo(int mediaId);
 
-  Future<List<Genres>> loadGenres(String locale);
+  Future<List<Genres>> loadGenres();
 
   Future<List<SearchResult>> getSearchResults(String query);
 
@@ -28,7 +28,9 @@ abstract class MediaProvider {
 }
 
 class MovieProviderDb extends MediaProvider {
-  MovieProviderDb();
+  String _language = "en_US";
+
+  MovieProviderDb(this._language);
 
   ApiClientDb _apiClient = ApiClientDb();
 
@@ -38,15 +40,19 @@ class MovieProviderDb extends MediaProvider {
   }
 
   @override
-  Future<List<MediaItem>> loadMediaForGenreIDs(List<int> genreIDs,
-      {sortBy: "", int page: 1}) {
+  Future<List<MediaItem>> loadMediaForGenreIDs(
+    List<int> genreIDs, {
+    sortBy: "",
+    int page: 1,
+  }) {
     return _apiClient.getMoviesForGenreIDs(
         genreIDs: genreIDs, page: page, sortBy: sortBy);
   }
 
   @override
   Future<dynamic> getDetails(int mediaId) {
-    return _apiClient.getMediaDetails(mediaId, type: "movie");
+    return _apiClient.getMediaDetails(mediaId,
+        type: "movie", language: _language);
   }
 
   @override
@@ -60,8 +66,8 @@ class MovieProviderDb extends MediaProvider {
   }
 
   @override
-  Future<List<Genres>> loadGenres(String locale) {
-    return _apiClient.getGenres(locale);
+  Future<List<Genres>> loadGenres() {
+    return _apiClient.getGenres(_language);
   }
 
   Future<List<SearchResult>> getSearchResults(String query) {
@@ -69,30 +75,34 @@ class MovieProviderDb extends MediaProvider {
   }
 
   Future<List<MediaItem>> getMoviesForActor(int actorId) {
-    return _apiClient.getMoviesForActor(actorId);
+    return _apiClient.getMoviesForActor(actorId, language: _language);
   }
 }
 
 class MovieProviderVideo extends MediaProvider {
-  MovieProviderVideo();
+  String _language = "en_US";
+
+  MovieProviderVideo(this._language);
 
   ApiClient _apiClient = ApiClient();
 
   @override
   Future<List<MediaItem>> loadMedia(String category, {int page: 1}) {
-    return _apiClient.fetchMovies(category: category, page: page);
+    return _apiClient.fetchMovies(
+        category: category, page: page, language: _language);
   }
 
   @override
   Future<List<MediaItem>> loadMediaForGenreIDs(List<int> genreIDs,
       {sortBy: "", int page: 1}) {
     return _apiClient.getMoviesForGenreIDs(
-        genreIDs: genreIDs, page: page, sortBy: sortBy);
+        genreIDs: genreIDs, page: page, sortBy: sortBy, language: _language);
   }
 
   @override
   Future<dynamic> getDetails(int mediaId) {
-    return _apiClient.getMediaDetails(mediaId, type: "movie");
+    return _apiClient.getMediaDetails(mediaId,
+        type: "movie", language: _language);
   }
 
   @override
@@ -106,15 +116,15 @@ class MovieProviderVideo extends MediaProvider {
   }
 
   @override
-  Future<List<Genres>> loadGenres(String locale) {
-    return _apiClient.getGenres(locale);
+  Future<List<Genres>> loadGenres() {
+    return _apiClient.getGenres(this._language);
   }
 
   Future<List<SearchResult>> getSearchResults(String query) {
-    return _apiClient.getSearchResults(query);
+    return _apiClient.getSearchResults(query, language: _language);
   }
 
   Future<List<MediaItem>> getMoviesForActor(int actorId) {
-    return _apiClient.getMoviesForActor(actorId);
+    return _apiClient.getMoviesForActor(actorId, language: _language);
   }
 }
