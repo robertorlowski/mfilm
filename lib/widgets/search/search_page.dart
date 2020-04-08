@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
-import 'package:mfilm/util/api_client.dart';
+import 'package:mfilm/util/mediaproviders.dart';
 import 'package:mfilm/util/utils.dart';
 import 'package:mfilm/model/searchresult.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:mfilm/widgets/search/search_item.dart';
 
 class SearchScreen extends StatefulWidget {
+  final MediaProvider provider;
+
+  SearchScreen(this.provider);
+
   @override
   _SearchPageState createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchScreen> {
-  ApiClient _apiClient = ApiClient();
   List<SearchResult> _resultList = List();
   SearchBar searchBar;
   LoadingState _currentState = LoadingState.WAITING;
@@ -45,7 +48,7 @@ class _SearchPageState extends State<SearchScreen> {
         .debounce(Duration(milliseconds: 250))
         .distinct()
         .switchMap((query) =>
-            Observable.fromFuture(_apiClient.getSearchResults(query)))
+            Observable.fromFuture(widget.provider.getSearchResults(query)))
         .listen(_setResults);
   }
 
@@ -86,7 +89,7 @@ class _SearchPageState extends State<SearchScreen> {
             : ListView.builder(
                 itemCount: _resultList.length,
                 itemBuilder: (BuildContext context, int index) =>
-                    SearchItemCard(_resultList[index]));
+                    SearchItemCard(_resultList[index], widget.provider));
       default:
         return Container();
     }

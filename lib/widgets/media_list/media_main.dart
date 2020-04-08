@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mfilm/model/genres.dart';
+import 'package:mfilm/model/mediaitem.dart';
 import 'package:mfilm/util/mediaproviders.dart';
 import 'package:mfilm/widgets/media_list_small/media_list_small.dart';
 
 class MainList extends StatefulWidget {
   final List<Genres> genreIDs;
-  MainList(this.genreIDs);
+  final MediaProvider provider;
+  final MediaType mediaType;
+
+  MainList(this.mediaType, this.genreIDs, this.provider);
 
   @override
   MainListState createState() {
@@ -14,8 +18,6 @@ class MainList extends StatefulWidget {
 }
 
 class MainListState extends State<MainList> {
-  final MediaProvider movieProvider = MovieProvider();
-
   @override
   void initState() {
     super.initState();
@@ -31,7 +33,8 @@ class MainListState extends State<MainList> {
     return new Container(
         margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         child: MediaListSmall(
-          movieProvider,
+          widget.mediaType,
+          widget.provider,
           widget.genreIDs,
         ));
   }

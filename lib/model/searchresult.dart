@@ -3,11 +3,14 @@ import 'package:mfilm/model/mediaitem.dart';
 import 'package:mfilm/util/utils.dart';
 
 class SearchResult {
-  String mediaType;
+  String _mediaType;
   Map<String, dynamic> data;
+  MediaItem _mediaItem;
 
   String _getImagePath() {
-    switch (mediaType) {
+    switch (_mediaType) {
+      case "db":
+        return _mediaItem.posterPath;
       case "movie":
       case "tv":
         return data['poster_path'] ?? "";
@@ -18,8 +21,28 @@ class SearchResult {
     }
   }
 
+  String get mediaTypeName {
+    switch (_mediaType) {
+      case "db":
+      case "movie":
+      case "tv":
+        return "Film";
+      case "person":
+        return "Aktor";
+      default:
+        return "";
+    }
+  }
+
+  String get mediaType {
+    return _mediaType;
+  }
+
   String get title {
-    switch (mediaType) {
+    switch (_mediaType) {
+      case "db":
+        return _mediaItem.title;
+      case "video":
       case "movie":
         return data['title'];
       case "tv":
@@ -30,14 +53,23 @@ class SearchResult {
     }
   }
 
-  MediaItem get asMovie => MediaItem(data, MediaType.movie);
+  MediaItem asMovie(MediaType mediaType) {
+    if (mediaType == MediaType.db) {
+      return _mediaItem;
+    } else {
+      return MediaItem(data, mediaType);
+    }
+  }
 
-  MediaItem get asShow => MediaItem(data, MediaType.show);
+  MediaItem asShow() => MediaItem(data, MediaType.show);
 
-  Actor get asActor => Actor.fromJson(data);
+  Actor asActor() => Actor.fromJson(data);
 
   String get subtitle {
-    switch (mediaType) {
+    switch (_mediaType) {
+      case "db":
+        return _mediaItem.releaseDate;
+      case "video":
       case "movie":
         return formatDate(data['release_date']);
 
@@ -49,6 +81,11 @@ class SearchResult {
   String get imageUrl => getMediumPictureUrl(_getImagePath());
 
   SearchResult.fromJson(Map jsonMap)
-      : mediaType = jsonMap['media_type'],
+      : _mediaType = jsonMap['media_type'],
         data = jsonMap;
+
+  SearchResult.fromMediaItem(String mediaType, MediaItem mediaItem) {
+    this._mediaType = mediaType;
+    this._mediaItem = mediaItem;
+  }
 }

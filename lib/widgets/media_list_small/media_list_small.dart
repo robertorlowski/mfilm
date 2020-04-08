@@ -8,11 +8,12 @@ import 'package:mfilm/widgets/media_list_small/media_list_item_small.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class MediaListSmall extends StatefulWidget {
-  MediaListSmall(this.provider, this.genreIDs, {Key key})
-      : super(key: Key(getGenreString(genreIDs)));
+  MediaListSmall(this.mediaType, this.provider, this.genreIDs, {Key key})
+      : super(key: Key(mediaType.toString() + getGenreString(genreIDs)));
 
   final MediaProvider provider;
   final List<Genres> genreIDs;
+  final MediaType mediaType;
 
   @override
   _MediaListSmallState createState() => _MediaListSmallState();
@@ -56,12 +57,12 @@ class _MediaListSmallState extends State<MediaListSmall> {
   void initState() {
     listener();
     super.initState();
-    ScopedModel.of<AppModel>(context).addListener(listener);
+    //ScopedModel.of<AppModel>(context).addListener(listener);
   }
 
   @override
   void dispose() {
-    ScopedModel.of<AppModel>(context).removeListener(listener);
+    //ScopedModel.of<AppModel>(context).removeListener(listener);
     super.dispose();
   }
 
@@ -86,7 +87,8 @@ class _MediaListSmallState extends State<MediaListSmall> {
           Container(
             height: 280,
             //margin: EdgeInsets.symmetric(horizontal: 10),
-            child: _getContentSection(model.getMovieSortBy()),
+            child:
+                _getContentSection(model.getDefaultSortByKey(widget.mediaType)),
           )
         ],
       ),
@@ -107,7 +109,6 @@ class _MediaListSmallState extends State<MediaListSmall> {
               if (!_isLoading && index > (_movies.length * 0.7)) {
                 _loadNextPage(sortBy);
               }
-
               return MediaListSmallItem(_movies[index]);
             });
       case LoadingState.ERROR:

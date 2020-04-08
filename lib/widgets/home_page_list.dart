@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:mfilm/model/mediaitem.dart';
 import 'package:mfilm/util/mediaproviders.dart';
@@ -12,9 +14,19 @@ class HomePage2 extends StatefulWidget {
 class HomePageState extends State<HomePage2> {
   PageController _pageController;
   int _page = 0;
-  MediaType mediaType = MediaType.movie;
+  MediaType mediaType = MediaType.video;
 
-  final MediaProvider movieProvider = MovieProvider();
+  final MediaProvider videoProvider = MovieProviderVideo();
+  final MediaProvider dbProvider = MovieProviderDb();
+
+  MediaProvider _getProvider() {
+    switch (mediaType) {
+      case MediaType.db:
+        return dbProvider;
+      default:
+        return videoProvider;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +40,7 @@ class HomePageState extends State<HomePage2> {
                 onPressed: () => goToFavorites(context)),
             IconButton(
               icon: Icon(Icons.search, color: Colors.white),
-              onPressed: () => goToSearch(context),
+              onPressed: () => goToSearch(context, _getProvider()),
             )
           ],
           title: Text("mFilm"),
@@ -44,19 +56,36 @@ class HomePageState extends State<HomePage2> {
                 height: 5.0,
               ),
               ListTile(
-                title: Text("Movies info",
+                title: Text("Zwiastuny filmów",
                     style: TextStyle(
                         fontSize: 16.0,
-                        color: (mediaType == MediaType.movie)
+                        color: (mediaType == MediaType.video)
                             ? Theme.of(context).accentColor
                             : Theme.of(context).textTheme.subhead.color)),
-                selected: mediaType == MediaType.movie,
+                selected: mediaType == MediaType.video,
                 trailing: Icon(Icons.local_movies,
-                    color: (mediaType == MediaType.movie)
+                    color: (mediaType == MediaType.video)
                         ? Theme.of(context).accentColor
                         : Theme.of(context).textTheme.subhead.color),
                 onTap: () {
-                  _changeMediaType(MediaType.movie);
+                  _changeMediaType(MediaType.video);
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                title: Text("Filmy",
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        color: (mediaType == MediaType.db)
+                            ? Theme.of(context).accentColor
+                            : Theme.of(context).textTheme.subhead.color)),
+                selected: mediaType == MediaType.db,
+                trailing: Icon(Icons.local_movies,
+                    color: (mediaType == MediaType.db)
+                        ? Theme.of(context).accentColor
+                        : Theme.of(context).textTheme.subhead.color),
+                onTap: () {
+                  _changeMediaType(MediaType.db);
                   Navigator.of(context).pop();
                 },
               ),
@@ -64,16 +93,15 @@ class HomePageState extends State<HomePage2> {
                 height: 5.0,
               ),
               ListTile(
-                title: Text(
-                  "Close",
-                  style: TextStyle(
-                      fontSize: 16.0,
+                  title: Text(
+                    "Zamknij",
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        color: Theme.of(context).textTheme.subhead.color),
+                  ),
+                  trailing: Icon(Icons.close,
                       color: Theme.of(context).textTheme.subhead.color),
-                ),
-                trailing: Icon(Icons.close,
-                    color: Theme.of(context).textTheme.subhead.color),
-                onTap: () => Navigator.of(context).pop(),
-              )
+                  onTap: () => exit(0))
             ],
           ),
         ),
@@ -102,7 +130,7 @@ class HomePageState extends State<HomePage2> {
   }
 
   List<BottomNavigationBarItem> _getNavBarItems() {
-    if (mediaType == MediaType.movie) {
+    if (mediaType == MediaType.video) {
       return [
         BottomNavigationBarItem(
             icon: Icon(Icons.thumb_up), title: Text('Popular')),
@@ -111,8 +139,15 @@ class HomePageState extends State<HomePage2> {
         BottomNavigationBarItem(
             icon: Icon(Icons.star), title: Text('Top Rated')),
       ];
+    } else if (mediaType == MediaType.db) {
+      return [
+        BottomNavigationBarItem(
+            icon: Icon(Icons.thumb_up), title: Text('Popular')),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.star), title: Text('Top Rated')),
+      ];
     } else {
-      return null;
+      return [];
     }
   }
 
@@ -120,22 +155,26 @@ class HomePageState extends State<HomePage2> {
     if (mediaType != type) {
       setState(() {
         mediaType = type;
+        _page = 0;
       });
     }
   }
 
   List<Widget> _getMediaList() {
-    return (mediaType == MediaType.movie)
-        ? <Widget>[
-            MediaList(
-              movieProvider,
-              "popular",
-              key: Key("movies-popular"),
-            ),
-            MediaList(movieProvider, "upcoming", key: Key("movies-upcoming")),
-            MediaList(movieProvider, "top_rated", key: Key("movies-top_rated")),
-          ]
-        : null;
+    if (mediaType == MediaType.video) {
+      return <Widget>[
+        MediaList(_getProvider(), "popular", key: Key("movies-popular")),
+        MediaList(_getProvider(), "upcoming", key: Key("movies-upcoming")),
+        MediaList(_getProvider(), "top_rated", key: Key("movies-top_rated")),
+      ];
+    } else if (mediaType == MediaType.db) {
+      return <Widget>[
+        MediaList(_getProvider(), "popularity", key: Key("db-popularity")),
+        MediaList(_getProvider(), "voteAverage", key: Key("db-voteAverage")),
+      ];
+    } else {
+      return [];
+    }
   }
 
   void _navigationTapped(int page) {

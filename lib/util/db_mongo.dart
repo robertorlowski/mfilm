@@ -3,8 +3,6 @@ import 'package:mongo_dart/mongo_dart.dart' show Db;
 class DBConnection {
   static DBConnection _instance;
 
-  Db _db;
-
   static DBConnection getInstance() {
     if (_instance == null) {
       _instance = DBConnection();
@@ -13,6 +11,8 @@ class DBConnection {
   }
 
   Future<Db> getConnection() async {
+    Db _db;
+
     if (_db == null) {
       try {
         _db = Db(_getConnectionString());
@@ -33,7 +33,7 @@ class DBConnection {
     return "mongodb://mfilm:Proste123!@ds229438.mlab.com:29438/mfilm";
   }
 
-  closeConnection() {
+  closeConnection(Db _db) {
     _db.close();
   }
 }

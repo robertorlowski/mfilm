@@ -10,7 +10,6 @@ import 'package:mfilm/model/video.dart';
 import 'package:mfilm/model/searchresult.dart';
 import 'package:mfilm/util/db_mongo.dart';
 import 'package:mfilm/util/constants.dart';
-import 'package:mfilm/util/utils.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:mongo_dart_query/mongo_dart_query.dart';
 
@@ -18,7 +17,7 @@ class ApiClientDb {
   static final _client = ApiClientDb._internal();
   final _http = HttpClient();
   final sourceFormat = DateFormat('yyyy-MM-dd');
-  static final DBConnection _dbConnection = DBConnection.getInstance();
+  static final DBConnection _mongoDb = DBConnection.getInstance();
   ApiClientDb._internal();
 
   final String baseUrl = 'api.themoviedb.org';
@@ -33,41 +32,45 @@ class ApiClientDb {
 
   Future<List<MediaItem>> fetchMovies(
       {int page: 1, String category: "popularity"}) async {
-    var collection =
-        (await _dbConnection.getConnection()).collection("tmdb_cda_videos");
-
-    List<MediaItem> list = await collection
-        .find(where
-            .sortBy('popularity', descending: true)
-            .skip(30 * (page - 1))
-            .limit(30 * page))
-        .map<MediaItem>((item) => MediaItem(item, MediaType.movie, db: true))
-        .toList();
-
-    _dbConnection.closeConnection();
-    return list;
+    print('fetchMovies ' + category);
+    Db _db = await _mongoDb.getConnection();
+    try {
+      var collection = _db.collection("tmdb_cda_videos");
+      List<MediaItem> list = await collection
+          .find(where
+              .eq("status", "Released")
+              .sortBy(category, descending: true)
+              .skip(30 * (page - 1))
+              .limit(30 * page))
+          .map<MediaItem>((item) => MediaItem(item, MediaType.db))
+          .where((item) => item.posterPath != "" || item.backdropPath != "")
+          .toList();
+      return list;
+    } finally {
+      _mongoDb.closeConnection(_db);
+    }
   }
 
   Future<List<MediaItem>> getMoviesForGenreIDs(
       {int page: 1, sortBy: "", List<int> genreIDs}) async {
-    var url = Uri.https(baseUrl, '3/discover/movie', {
-      'api_key': API_KEY,
-      'page': page.toString(),
-      'primary_release_date.lte': sourceFormat.format(DateTime.now()),
-      'with_genres': getGenreIDs(genreIDs),
-      'sort_by': sortBy
-      //'sort_by': 'release_date.desc'
-    });
+    Db _db = await _mongoDb.getConnection();
+    try {
+      var collection = _db.collection("tmdb_cda_videos");
+      List<MediaItem> list = await collection
+          .find(where
+              .eq("status", "Released")
+              .oneFrom("genres", genreIDs)
+              .sortBy(sortBy, descending: true)
+              .skip(30 * (page - 1))
+              .limit(30 * page))
+          .map<MediaItem>((item) => MediaItem(item, MediaType.db))
+          .where((item) => item.posterPath != "" || item.backdropPath != "")
+          .toList();
 
-    Future<List<MediaItem>> list = _getJson(url)
-        .then((json) => json['results'])
-        .then((data) => data
-            .map<MediaItem>((item) => MediaItem(item, MediaType.movie))
-            .toList());
-
-    return list.then((list) => list
-        .where((item) => item.posterPath != "" || item.backdropPath != "")
-        .toList());
+      return list;
+    } finally {
+      _mongoDb.closeConnection(_db);
+    }
   }
 
   Future<List<Video>> getVideos(int movieId) async {
@@ -110,16 +113,35 @@ class ApiClientDb {
     });
 
     return _getJson(url).then((json) => json['results']).then((data) => data
-        .map<MediaItem>((item) => MediaItem(item, MediaType.movie))
+        .map<MediaItem>((item) => MediaItem(item, MediaType.video))
         .toList());
   }
 
-  Future<List<SearchResult>> getSearchResults(String query) {
-    var url = Uri.https(
-        baseUrl, '3/search/multi', {'api_key': API_KEY, 'query': query});
+  Future<List<SearchResult>> getSearchResults(String query) async {
+    print("query: " + query);
+    Db _db = await _mongoDb.getConnection();
+    try {
+      var collection = _db.collection("tmdb_cda_videos");
 
-    return _getJson(url).then((json) => json['results']
-        .map<SearchResult>((item) => SearchResult.fromJson(item))
-        .toList());
+      List<SearchResult> resultList = [];
+
+      List<MediaItem> list = await collection
+          .find(where
+              .eq("status", "Released")
+              .match("title", query, caseInsensitive: true)
+              .match("originalTitle", query, caseInsensitive: true)
+              .limit(100))
+          .map<MediaItem>((item) => MediaItem(item, MediaType.db))
+          .where((item) => item.posterPath != "" || item.backdropPath != "")
+          .toList();
+
+      for (var item in list) {
+        resultList.add(SearchResult.fromMediaItem("db", item));
+      }
+
+      return resultList;
+    } finally {
+      _mongoDb.closeConnection(_db);
+    }
   }
 }

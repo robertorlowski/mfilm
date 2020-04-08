@@ -31,21 +31,21 @@ class AppModel extends Model {
   ThemeData get theme => _themes[_currentTheme];
 
   List<MediaItem> get favoriteMovies => _favorites
-      .where((MediaItem item) => item.type == MediaType.movie)
+      .where((MediaItem item) => item.type == MediaType.video)
       .toList();
 
-  List<MediaItem> get favoriteShows => _favorites
-      .where((MediaItem item) => item.type == MediaType.show)
-      .toList();
-
-  void setMovieSortBy(String value) {
+  void setDefaultSortBy(String value) {
     _currentSortBy = value;
     _sharedPrefs.setString(_SORT_KEY, _currentSortBy);
     notifyListeners();
   }
 
-  String getMovieSortBy() {
+  String getDefaultSortBy(MediaType mediaType) {
     return _currentSortBy;
+  }
+
+  String getDefaultSortByKey(MediaType mediaType) {
+    return getSortByKey(mediaType, _currentSortBy);
   }
 
   void toggleTheme() {

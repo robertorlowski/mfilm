@@ -1,7 +1,7 @@
 import 'package:mfilm/model/move.dart';
 import 'package:mfilm/util/utils.dart';
 
-enum MediaType { movie, show, hd }
+enum MediaType { video, show, db }
 enum MovieType { CDA }
 
 class MediaItem {
@@ -30,50 +30,54 @@ class MediaItem {
         : DateTime.parse(releaseDate).year;
   }
 
-  factory MediaItem(Map jsonMap, MediaType type, {bool db = false}) => db
+  factory MediaItem(Map jsonMap, MediaType type) => type == MediaType.db
       ? MediaItem._internalFromDbJson(jsonMap, type: type)
       : MediaItem._internalFromJson(jsonMap, type: type);
 
-  MediaItem._internalFromDbJson(Map jsonMap, {MediaType type: MediaType.movie})
+  MediaItem._internalFromDbJson(Map jsonMap, {MediaType type: MediaType.db})
       : type = type,
         id = jsonMap["id"].toInt(),
-        voteAverage = jsonMap["voteAverage"].toDouble(),
+        voteAverage = jsonMap["voteAverage"] != null
+            ? jsonMap["voteAverage"].toDouble()
+            : null,
         title = jsonMap["title"],
         posterPath = jsonMap["posterPath"] ?? "",
         backdropPath = jsonMap["backdropPath"] ?? "",
         overview = jsonMap["overview"],
         releaseDate = jsonMap["releaseDate"],
-        genreIds = (jsonMap["genres"] as List<dynamic>)
-            .map<int>((value) => value.toInt())
-            .toList(),
-        movieIds = (jsonMap["cdaIds"])
-            .map<Movie>((value) => new Movie("cda.pl", MovieType.CDA.toString(),
-                value["link"], value["title"]))
-            .toList();
+        genreIds = jsonMap["genres"] == null
+            ? []
+            : (jsonMap["genres"] as List<dynamic>)
+                .map<int>((value) => value.toInt())
+                .toList(),
+        movieIds = jsonMap["cdaIds"] == null
+            ? []
+            : (jsonMap["cdaIds"])
+                .map<Movie>((value) => new Movie("cda.pl",
+                    MovieType.CDA.toString(), value["link"], value["title"]))
+                .toList();
 
-  MediaItem._internalFromJson(Map jsonMap, {MediaType type: MediaType.movie})
+  MediaItem._internalFromJson(Map jsonMap, {MediaType type: MediaType.video})
       : type = type,
         id = jsonMap["id"].toInt(),
-        voteAverage = jsonMap["vote_average"].toDouble(),
-        title = jsonMap[(type == MediaType.movie ? "title" : "name")],
+        voteAverage = jsonMap["vote_average"] != null
+            ? jsonMap["vote_average"].toDouble()
+            : null,
+        title = jsonMap[(type == MediaType.video ? "title" : "name")],
         posterPath = jsonMap["poster_path"] ?? "",
         backdropPath = jsonMap["backdrop_path"] ?? "",
         overview = jsonMap["overview"],
         releaseDate = jsonMap[
-            (type == MediaType.movie ? "release_date" : "first_air_date")],
-        genreIds = (jsonMap["genre_ids"] as List<dynamic>)
-            .map<int>((value) => value.toInt())
-            .toList(),
-        movieIds = new List<Movie>.filled(
-            1,
-            new Movie(
-                "cda.pl",
-                MovieType.CDA.toString(),
-                "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
-                jsonMap[(type == MediaType.movie ? "title" : "name")]));
+            (type == MediaType.video ? "release_date" : "first_air_date")],
+        genreIds = jsonMap["genres"] == null
+            ? []
+            : (jsonMap["genre_ids"] as List<dynamic>)
+                .map<int>((value) => value.toInt())
+                .toList(),
+        movieIds = [];
 
   Map toJson() => {
-        'type': type == MediaType.movie ? 1 : 0,
+        'type': type == MediaType.video ? 1 : 0,
         'id': id,
         'vote_average': voteAverage,
         'title': title,
@@ -87,5 +91,5 @@ class MediaItem {
 
   factory MediaItem.fromPrefsJson(Map jsonMap) => MediaItem._internalFromJson(
       jsonMap,
-      type: (jsonMap['type'].toInt() == 1) ? MediaType.movie : MediaType.show);
+      type: (jsonMap['type'].toInt() == 1) ? MediaType.video : MediaType.show);
 }

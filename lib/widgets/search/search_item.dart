@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:mfilm/model/mediaitem.dart';
 import 'package:mfilm/model/searchresult.dart';
+import 'package:mfilm/util/mediaproviders.dart';
 import 'package:mfilm/util/navigator.dart';
 import 'package:mfilm/util/styles.dart';
 
 class SearchItemCard extends StatelessWidget {
   final SearchResult item;
+  final MediaProvider provider;
 
-  SearchItemCard(this.item);
+  SearchItemCard(this.item, this.provider);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,7 @@ class SearchItemCard extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(4.0))),
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
-                      child: Text(item.mediaType.toUpperCase(),
+                      child: Text(item.mediaTypeName.toUpperCase(),
                           style: TextStyle(color: colorAccent)),
                     ),
                   ),
@@ -61,11 +64,15 @@ class SearchItemCard extends StatelessWidget {
 
   _handleTap(BuildContext context) {
     switch (item.mediaType) {
+      case "db":
+        goToMovieDetails(context, item.asMovie(MediaType.db));
+        return;
+      case "video":
       case "movie":
-        goToMovieDetails(context, item.asMovie);
+        goToMovieDetails(context, item.asMovie(MediaType.video));
         return;
       case "person":
-        goToActorDetails(context, item.asActor);
+        goToActorDetails(context, item.asActor());
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:mfilm/model/genres.dart';
+import 'package:mfilm/model/mediaitem.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:ui' as ui;
 
@@ -11,13 +12,32 @@ final dateFormat = DateFormat.yMMMMd("en_US");
 final String sysLanguage = ui.window.locale.languageCode;
 
 final Map<String, String> moveSortBy = {
-  "popularity.desc": "Popularity (desc.)",
-  "popularity.asc": "Popularity (asc.)",
-  "vote_average.desc": "Vote average (desc.)",
-  "vote_average.asc": "Vote average (asc.)",
-  "first_air_date.desc": "First air date (desc.)",
-  "first_air_date.asc": "First air date (asc.)",
+  "popularity": "Popularność",
+  "vote_average": "Średnia ocena",
+  "release_date": "Data wydania"
 };
+
+getSortByKey(MediaType mediaType, String key) {
+  if (MediaType.db == mediaType) {
+    switch (key) {
+      case 'popularity':
+        return 'popularity';
+      case 'vote_average':
+        return 'voteAverage';
+      case "release_date":
+        return 'releaseDate';
+    }
+  } else {
+    switch (key) {
+      case 'popularity':
+        return 'popularity.desc';
+      case 'vote_average':
+        return 'vote_average.desc';
+      case "release_date":
+        return 'release_date.desc';
+    }
+  }
+}
 
 List<int> getGenresForIds(List<Genres> genreIds) =>
     genreIds.map<int>((map) => map.id).toList();

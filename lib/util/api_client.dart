@@ -35,7 +35,7 @@ class ApiClient {
         {'api_key': API_KEY, 'page': page.toString()});
 
     return _getJson(url).then((json) => json['results']).then((data) => data
-        .map<MediaItem>((item) => MediaItem(item, MediaType.movie))
+        .map<MediaItem>((item) => MediaItem(item, MediaType.video))
         .toList());
   }
 
@@ -53,7 +53,7 @@ class ApiClient {
     Future<List<MediaItem>> list = _getJson(url)
         .then((json) => json['results'])
         .then((data) => data
-            .map<MediaItem>((item) => MediaItem(item, MediaType.movie))
+            .map<MediaItem>((item) => MediaItem(item, MediaType.video))
             .toList());
 
     return list.then((list) => list
@@ -101,7 +101,7 @@ class ApiClient {
     });
 
     return _getJson(url).then((json) => json['results']).then((data) => data
-        .map<MediaItem>((item) => MediaItem(item, MediaType.movie))
+        .map<MediaItem>((item) => MediaItem(item, MediaType.video))
         .toList());
   }
 

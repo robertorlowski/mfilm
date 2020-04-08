@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:mfilm/model/app_model.dart';
 import 'package:mfilm/model/genres.dart';
@@ -15,10 +17,22 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  MediaType mediaType = MediaType.movie;
+  MediaType mediaType = MediaType.video;
   List<Widget> rowsMedia;
   String sortValue = moveSortBy.keys.first;
-  final MediaProvider movieProvider = MovieProvider();
+  List<Genres> genresList = [];
+
+  final MediaProvider videoProvider = MovieProviderVideo();
+  final MediaProvider dbProvider = MovieProviderDb();
+
+  MediaProvider _getProvider() {
+    switch (mediaType) {
+      case MediaType.db:
+        return dbProvider;
+      default:
+        return videoProvider;
+    }
+  }
 
   AppBar prepareAppBar() {
     return AppBar(
@@ -29,7 +43,7 @@ class HomePageState extends State<HomePage> {
             onPressed: () => goToFavorites(context)),
         IconButton(
           icon: Icon(Icons.search, color: Colors.white),
-          onPressed: () => goToSearch(context),
+          onPressed: () => goToSearch(context, _getProvider()),
         )
       ],
       title: Text("mFilm"),
@@ -45,19 +59,36 @@ class HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(0.0),
               child: Image(image: AssetImage('assets/mfilm.png'))),
           ListTile(
-            title: Text("Movies info",
+            title: Text("Zwiastuny filmów",
                 style: TextStyle(
                     fontSize: 16.0,
-                    color: (mediaType == MediaType.movie)
+                    color: (mediaType == MediaType.video)
                         ? Theme.of(context).accentColor
                         : Theme.of(context).textTheme.subhead.color)),
-            selected: mediaType == MediaType.movie,
+            selected: mediaType == MediaType.video,
             trailing: Icon(Icons.local_movies,
-                color: (mediaType == MediaType.movie)
+                color: (mediaType == MediaType.video)
                     ? Theme.of(context).accentColor
                     : Theme.of(context).textTheme.subhead.color),
             onTap: () {
-              _changeMediaType(MediaType.movie);
+              _changeMediaType(MediaType.video);
+              Navigator.of(context).pop();
+            },
+          ),
+          ListTile(
+            title: Text("Filmy",
+                style: TextStyle(
+                    fontSize: 16.0,
+                    color: (mediaType == MediaType.db)
+                        ? Theme.of(context).accentColor
+                        : Theme.of(context).textTheme.subhead.color)),
+            selected: mediaType == MediaType.db,
+            trailing: Icon(Icons.local_movies,
+                color: (mediaType == MediaType.db)
+                    ? Theme.of(context).accentColor
+                    : Theme.of(context).textTheme.subhead.color),
+            onTap: () {
+              _changeMediaType(MediaType.db);
               Navigator.of(context).pop();
             },
           ),
@@ -65,7 +96,7 @@ class HomePageState extends State<HomePage> {
             height: 5.0,
           ),
           ListTile(
-            title: Text("Settings",
+            title: Text("Ustawienia",
                 style: TextStyle(
                     fontSize: 16.0,
                     color: Theme.of(context).textTheme.subhead.color)),
@@ -75,7 +106,7 @@ class HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text("Sort by:",
+                Text("Sortuj po:",
                     style: TextStyle(
                         fontSize: 16.0,
                         color: Theme.of(context).textTheme.subhead.color)),
@@ -96,13 +127,12 @@ class HomePageState extends State<HomePage> {
                                 color: Colors.white54,
                               ),
                               onChanged: (String newValue) {
-                                setState(() {
-                                  model.setMovieSortBy(newValue);
-                                });
+                                model.setDefaultSortBy(newValue);
+                                _changeMediaType(mediaType);
+                                Navigator.of(context).pop();
                               },
                               items: moveSortBy.entries
                                   .map<DropdownMenuItem<String>>((ooo) {
-                                print(ooo);
                                 return DropdownMenuItem<String>(
                                   value: ooo.key,
                                   child: Text(ooo.value),
@@ -117,14 +147,14 @@ class HomePageState extends State<HomePage> {
           ),
           ListTile(
             title: Text(
-              "Close",
+              "Zamknij aplikację",
               style: TextStyle(
                   fontSize: 16.0,
                   color: Theme.of(context).textTheme.subhead.color),
             ),
             trailing: Icon(Icons.close,
                 color: Theme.of(context).textTheme.subhead.color),
-            onTap: () => Navigator.of(context).pop(),
+            onTap: () => exit(0),
           )
         ],
       ),
@@ -143,12 +173,12 @@ class HomePageState extends State<HomePage> {
   }
 
   _prepareContent() async {
+    setState(() => rowsMedia = []);
     List<Widget> lll = new List<Widget>();
-
     try {
-      List<Genres> list = await movieProvider.loadGenres(sysLanguage);
+      List<Genres> list = await _getProvider().loadGenres(sysLanguage);
       for (Genres ggg in list) {
-        lll.add(prepareList(new MainList([ggg])));
+        lll.add(prepareList(new MainList(mediaType, [ggg], _getProvider())));
       }
       setState(() => rowsMedia = lll);
     } catch (e) {
@@ -165,7 +195,7 @@ class HomePageState extends State<HomePage> {
         appBar: prepareAppBar(),
         drawer: ScopedModelDescendant<AppModel>(
           builder: (context, child, AppModel model) =>
-              prepareDrawer(model.getMovieSortBy()),
+              prepareDrawer(model.getDefaultSortBy(mediaType)),
         ),
         body: CustomScrollView(
             slivers: rowsMedia == null
@@ -176,11 +206,10 @@ class HomePageState extends State<HomePage> {
   }
 
   void _changeMediaType(MediaType type) {
-    if (mediaType != type) {
-      setState(() {
-        mediaType = type;
-      });
-    }
+    setState(() {
+      mediaType = type;
+      _prepareContent();
+    });
   }
 
   @override
