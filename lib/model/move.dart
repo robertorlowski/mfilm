@@ -3,6 +3,7 @@ class Movie {
   String type;
   String url;
   String title;
+  int time;
 
-  Movie(this.site, this.type, this.url, this.title);
+  Movie(this.site, this.type, this.url, this.title, this.time);
 }

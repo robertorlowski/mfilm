@@ -53,8 +53,12 @@ class MediaItem {
         movieIds = jsonMap["cdaIds"] == null
             ? []
             : (jsonMap["cdaIds"])
-                .map<Movie>((value) => new Movie("cda.pl",
-                    MovieType.CDA.toString(), value["link"], value["title"]))
+                .map<Movie>((value) => new Movie(
+                    "cda.pl",
+                    MovieType.CDA.toString(),
+                    value["link"],
+                    value["title"],
+                    int.parse(value["time_min"])))
                 .toList();
 
   MediaItem._internalFromJson(Map jsonMap, {MediaType type: MediaType.video})

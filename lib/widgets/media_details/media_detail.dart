@@ -323,30 +323,53 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
 
   prepareMovieSection(Movie movie) {
     return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 3.0),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-                flex: 2,
-                child: Text(
-                  movie.site,
-                  style: TextStyle(color: Colors.white, fontSize: 24.0),
-                )),
-            Expanded(
-              flex: 1,
-              child: GestureDetector(
-                //onTap: () => scrapy(movie.url),
-                //onTap: () => launchUrl(movie.url),
-                onTap: () => goToMoviePlay(context, movie, widget._mediaItem),
-                child: Icon(
-                  Icons.play_circle_filled,
-                  size: 42,
-                  //color: salmon,
+      padding: const EdgeInsets.symmetric(vertical: 3.0),
+      child: Row(children: <Widget>[
+        GestureDetector(
+          //onTap: () => scrapy(movie.url),
+          //onTap: () => launchUrl(movie.url),
+          onTap: () => goToMoviePlay(context, movie, widget._mediaItem),
+          child: Icon(
+            Icons.play_circle_filled,
+            size: 42,
+            //color: salmon,
+          ),
+        ),
+        Container(
+          width: 5.0,
+        ),
+        Row(children: <Widget>[
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(children: <Widget>[
+                  Text(
+                    movie.site,
+                    style: TextStyle(color: Colors.white, fontSize: 20.0),
+                  ),
+                  Text(
+                    (movie.time == null
+                        ? ""
+                        : " (" + movie.time.toString() + " min.)"),
+                    style: TextStyle(color: Colors.white, fontSize: 12.0),
+                  ),
+                ]),
+                GestureDetector(
+                  onTap: () => goToMoviePlay(context, movie, widget._mediaItem),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width - 90,
+                    height: 16,
+                    child: Text(
+                      movie.title,
+                      style: TextStyle(color: Colors.white, fontSize: 12.0),
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Spacer(flex: 2),
-          ],
-        ));
+              ]),
+        ]),
+      ]),
+    );
   }
 }

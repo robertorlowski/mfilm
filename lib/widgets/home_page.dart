@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  MediaType mediaType = MediaType.video;
+  MediaType mediaType = MediaType.db;
   List<Widget> rowsMedia;
   String sortValue = moveSortBy.keys.first;
   List<Genres> genresList = [];
@@ -59,23 +59,6 @@ class HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(0.0),
               child: Image(image: AssetImage('assets/mfilm.png'))),
           ListTile(
-            title: Text("Zwiastuny filmów",
-                style: TextStyle(
-                    fontSize: 16.0,
-                    color: (mediaType == MediaType.video)
-                        ? Theme.of(context).accentColor
-                        : Theme.of(context).textTheme.subhead.color)),
-            selected: mediaType == MediaType.video,
-            trailing: Icon(Icons.local_movies,
-                color: (mediaType == MediaType.video)
-                    ? Theme.of(context).accentColor
-                    : Theme.of(context).textTheme.subhead.color),
-            onTap: () {
-              _changeMediaType(MediaType.video);
-              Navigator.of(context).pop();
-            },
-          ),
-          ListTile(
             title: Text("Filmy",
                 style: TextStyle(
                     fontSize: 16.0,
@@ -89,6 +72,23 @@ class HomePageState extends State<HomePage> {
                     : Theme.of(context).textTheme.subhead.color),
             onTap: () {
               _changeMediaType(MediaType.db);
+              Navigator.of(context).pop();
+            },
+          ),
+          ListTile(
+            title: Text("Zwiastuny filmów",
+                style: TextStyle(
+                    fontSize: 16.0,
+                    color: (mediaType == MediaType.video)
+                        ? Theme.of(context).accentColor
+                        : Theme.of(context).textTheme.subhead.color)),
+            selected: mediaType == MediaType.video,
+            trailing: Icon(Icons.local_movies,
+                color: (mediaType == MediaType.video)
+                    ? Theme.of(context).accentColor
+                    : Theme.of(context).textTheme.subhead.color),
+            onTap: () {
+              _changeMediaType(MediaType.video);
               Navigator.of(context).pop();
             },
           ),

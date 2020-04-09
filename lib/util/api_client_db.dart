@@ -32,7 +32,6 @@ class ApiClientDb {
 
   Future<List<MediaItem>> fetchMovies(
       {int page: 1, String category: "popularity"}) async {
-    print('fetchMovies ' + category);
     Db _db = await _mongoDb.getConnection();
     try {
       var collection = _db.collection("tmdb_cda_videos");
@@ -40,8 +39,8 @@ class ApiClientDb {
           .find(where
               .eq("status", "Released")
               .sortBy(category, descending: true)
-              .skip(30 * (page - 1))
-              .limit(30 * page))
+              .skip(20 * (page - 1))
+              .limit(20 * page))
           .map<MediaItem>((item) => MediaItem(item, MediaType.db))
           .where((item) => item.posterPath != "" || item.backdropPath != "")
           .toList();
@@ -61,8 +60,8 @@ class ApiClientDb {
               .eq("status", "Released")
               .oneFrom("genres", genreIDs)
               .sortBy(sortBy, descending: true)
-              .skip(30 * (page - 1))
-              .limit(30 * page))
+              .skip(20 * (page - 1))
+              .limit(20 * page))
           .map<MediaItem>((item) => MediaItem(item, MediaType.db))
           .where((item) => item.posterPath != "" || item.backdropPath != "")
           .toList();
@@ -74,7 +73,6 @@ class ApiClientDb {
   }
 
   Future<List<SearchResult>> getSearchResults(String query) async {
-    print("query: " + query);
     Db _db = await _mongoDb.getConnection();
     try {
       var collection = _db.collection("tmdb_cda_videos");

@@ -58,23 +58,6 @@ class HomePageState extends State<HomePage2> {
                 height: 5.0,
               ),
               ListTile(
-                title: Text("Zwiastuny filmów",
-                    style: TextStyle(
-                        fontSize: 16.0,
-                        color: (mediaType == MediaType.video)
-                            ? Theme.of(context).accentColor
-                            : Theme.of(context).textTheme.subhead.color)),
-                selected: mediaType == MediaType.video,
-                trailing: Icon(Icons.local_movies,
-                    color: (mediaType == MediaType.video)
-                        ? Theme.of(context).accentColor
-                        : Theme.of(context).textTheme.subhead.color),
-                onTap: () {
-                  _changeMediaType(MediaType.video);
-                  Navigator.of(context).pop();
-                },
-              ),
-              ListTile(
                 title: Text("Filmy",
                     style: TextStyle(
                         fontSize: 16.0,
@@ -88,6 +71,23 @@ class HomePageState extends State<HomePage2> {
                         : Theme.of(context).textTheme.subhead.color),
                 onTap: () {
                   _changeMediaType(MediaType.db);
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                title: Text("Zwiastuny filmów",
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        color: (mediaType == MediaType.video)
+                            ? Theme.of(context).accentColor
+                            : Theme.of(context).textTheme.subhead.color)),
+                selected: mediaType == MediaType.video,
+                trailing: Icon(Icons.local_movies,
+                    color: (mediaType == MediaType.video)
+                        ? Theme.of(context).accentColor
+                        : Theme.of(context).textTheme.subhead.color),
+                onTap: () {
+                  _changeMediaType(MediaType.video);
                   Navigator.of(context).pop();
                 },
               ),
