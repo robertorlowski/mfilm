@@ -259,6 +259,8 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
                               "Hompage", _mediaDetails['homepage'], true),
                           prepareSection("Imdb",
                               getImdbUrl(_mediaDetails['imdb_id']), true),
+                          prepareSection(
+                              "Id", widget._mediaItem.id.toString(), false),
                         ]
                           ..add(
                             widget._mediaItem.movieIds == null
