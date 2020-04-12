@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:mfilm/i18/app_localizations.dart';
 import 'package:mfilm/model/mediaitem.dart';
 import 'package:mfilm/util/mediaproviders.dart';
 import 'package:mfilm/util/navigator.dart';
@@ -58,7 +59,7 @@ class HomePageState extends State<HomePage2> {
                 height: 5.0,
               ),
               ListTile(
-                title: Text("Filmy",
+                title: Text(AppLocalizations.of(context).translate("movies"),
                     style: TextStyle(
                         fontSize: 16.0,
                         color: (mediaType == MediaType.db)
@@ -75,7 +76,7 @@ class HomePageState extends State<HomePage2> {
                 },
               ),
               ListTile(
-                title: Text("Zwiastuny filmów",
+                title: Text(AppLocalizations.of(context).translate("trailers"),
                     style: TextStyle(
                         fontSize: 16.0,
                         color: (mediaType == MediaType.video)
@@ -96,7 +97,7 @@ class HomePageState extends State<HomePage2> {
               ),
               ListTile(
                   title: Text(
-                    "Zamknij",
+                    AppLocalizations.of(context).translate("close_app"),
                     style: TextStyle(
                         fontSize: 16.0,
                         color: Theme.of(context).textTheme.subhead.color),
@@ -135,18 +136,23 @@ class HomePageState extends State<HomePage2> {
     if (mediaType == MediaType.video) {
       return [
         BottomNavigationBarItem(
-            icon: Icon(Icons.thumb_up), title: Text('Popular')),
+            icon: Icon(Icons.thumb_up),
+            title: Text(AppLocalizations.of(context).translate("popular"))),
         BottomNavigationBarItem(
-            icon: Icon(Icons.update), title: Text('Upcoming')),
+            icon: Icon(Icons.update),
+            title: Text(AppLocalizations.of(context).translate("upcoming"))),
         BottomNavigationBarItem(
-            icon: Icon(Icons.star), title: Text('Top Rated')),
+            icon: Icon(Icons.star),
+            title: Text(AppLocalizations.of(context).translate("top_rated"))),
       ];
     } else if (mediaType == MediaType.db) {
       return [
         BottomNavigationBarItem(
-            icon: Icon(Icons.thumb_up), title: Text('Popular')),
+            icon: Icon(Icons.thumb_up),
+            title: Text(AppLocalizations.of(context).translate("popular"))),
         BottomNavigationBarItem(
-            icon: Icon(Icons.star), title: Text('Top Rated')),
+            icon: Icon(Icons.star),
+            title: Text(AppLocalizations.of(context).translate("top_rated"))),
       ];
     } else {
       return [];

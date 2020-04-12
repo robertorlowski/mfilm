@@ -10,41 +10,48 @@ class AppModel extends Model {
   final SharedPreferences _sharedPrefs;
   Set<MediaItem> _favorites = Set();
   static const _THEME_KEY = "theme_prefs_key";
+
   static const _SORT_KEY = "sort_key";
+  String _currentSortBy = moveSortBy[0];
 
   static const _FAVORITES_KEY = "media_favorites_key";
 
-  AppModel(this._sharedPrefs) {
+  static const _LANG_CODE_ = "language_code";
+  static const _COUNTRY_CODE_ = "countryCode";
+  Locale _appLocale = Locale('en');
+
+  static List<ThemeData> _themes = [ThemeData.dark(), ThemeData.light()];
+  int _currentTheme = 0;
+
+  ThemeData get theme => _themes[_currentTheme];
+
+  AppModel(this._sharedPrefs, Locale locale) {
     _currentTheme = _sharedPrefs.getInt(_THEME_KEY) ?? 0;
-    _currentSortBy = _sharedPrefs.getString(_SORT_KEY) ?? moveSortBy.keys.first;
+    _currentSortBy = _sharedPrefs.getString(_SORT_KEY) ?? moveSortBy[0];
 
     _favorites.addAll(_sharedPrefs
             .getStringList(_FAVORITES_KEY)
             ?.map((value) => MediaItem.fromPrefsJson(json.decode(value))) ??
         Set());
+
+    if (_sharedPrefs.getString('language_code') != null) {
+      _appLocale = Locale(_sharedPrefs.getString('language_code'));
+    }
+
+    changeLanguage(locale);
   }
-
-  static List<ThemeData> _themes = [ThemeData.dark(), ThemeData.light()];
-  int _currentTheme = 0;
-  String _currentSortBy = moveSortBy.keys.first;
-
-  ThemeData get theme => _themes[_currentTheme];
 
   List<MediaItem> favoriteMovies(MediaType mediaType) =>
       _favorites.where((MediaItem item) => item.type == mediaType).toList();
 
-  void setDefaultSortBy(String value) {
+  set defaultSortBy(String value) {
     _currentSortBy = value;
     _sharedPrefs.setString(_SORT_KEY, _currentSortBy);
     notifyListeners();
   }
 
-  String getDefaultSortBy(MediaType mediaType) {
+  String get defaultSortBy {
     return _currentSortBy;
-  }
-
-  String getDefaultSortByKey(MediaType mediaType) {
-    return getSortByKey(mediaType, _currentSortBy);
   }
 
   void toggleTheme() {
@@ -72,5 +79,24 @@ class AppModel extends Model {
             .toList()
             .map((MediaItem favoriteItem) => json.encode(favoriteItem.toJson()))
             .toList());
+  }
+
+  Locale get appLocal => _appLocale ?? Locale("en");
+
+  void changeLanguage(Locale type) async {
+    if (_appLocale == type) {
+      return;
+    }
+
+    if (type == Locale("pl")) {
+      _appLocale = Locale("pl");
+      await _sharedPrefs.setString(_LANG_CODE_, 'pl');
+      await _sharedPrefs.setString(_COUNTRY_CODE_, 'PL');
+    } else {
+      _appLocale = Locale("en");
+      await _sharedPrefs.setString(_LANG_CODE_, 'en');
+      await _sharedPrefs.setString(_COUNTRY_CODE_, 'US');
+    }
+    notifyListeners();
   }
 }

@@ -25,7 +25,7 @@ class _MediaListSmallState extends State<MediaListSmall> {
   LoadingState _loadingState = LoadingState.INIT;
   bool _isLoading = false;
 
-  listener() {
+  _init() {
     _movies.clear();
     _pageNumber = 1;
     _loadingState = LoadingState.INIT;
@@ -55,14 +55,12 @@ class _MediaListSmallState extends State<MediaListSmall> {
 
   @override
   void initState() {
-    listener();
+    _init();
     super.initState();
-    //ScopedModel.of<AppModel>(context).addListener(listener);
   }
 
   @override
   void dispose() {
-    //ScopedModel.of<AppModel>(context).removeListener(listener);
     super.dispose();
   }
 
@@ -87,8 +85,7 @@ class _MediaListSmallState extends State<MediaListSmall> {
           Container(
             height: 280,
             //margin: EdgeInsets.symmetric(horizontal: 10),
-            child:
-                _getContentSection(model.getDefaultSortByKey(widget.mediaType)),
+            child: _getContentSection(model.defaultSortBy),
           )
         ],
       ),
@@ -96,6 +93,7 @@ class _MediaListSmallState extends State<MediaListSmall> {
   }
 
   Widget _getContentSection(String sortBy) {
+    sortBy = getSortByKey(widget.mediaType, sortBy);
     switch (_loadingState) {
       case LoadingState.INIT:
         _loadNextPage(sortBy);

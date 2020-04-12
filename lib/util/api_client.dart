@@ -24,7 +24,8 @@ class ApiClient {
   factory ApiClient() => _client;
 
   Future<dynamic> _getJson(Uri uri) async {
-    var response = await (await _http.getUrl(uri)).close();
+    var ppp = await _http.getUrl(uri);
+    var response = await ppp.close();
     var transformedResponse = await response.transform(utf8.decoder).join();
     return json.decode(transformedResponse);
   }

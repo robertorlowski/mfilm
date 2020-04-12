@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mfilm/i18/app_localizations.dart';
 import 'package:mfilm/model/app_model.dart';
 import 'package:mfilm/model/cast.dart';
 import 'package:mfilm/model/genres.dart';
@@ -74,9 +75,9 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
 
       this._videos = new List<Video>();
       for (var item in _vvv) {
-        //if (item.site == 'YouTube' && item.type == 'Trailer') {
-        this._videos.add(item);
-        //}
+        if (item.site == 'YouTube' && item.type == 'Trailer') {
+          this._videos.add(item);
+        }
       }
       if (this._videos.isEmpty) {
         this._videos.add(_vvv.first);
@@ -209,7 +210,7 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "OVERVIEW",
+                        AppLocalizations.of(context).translate("OVERVIEW"),
                         style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       ),
@@ -245,18 +246,24 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
                     : Column(
                         children: <Widget>[
                           prepareSection(
-                              "Title", widget._mediaItem.title, false),
+                              AppLocalizations.of(context).translate("title"),
+                              widget._mediaItem.title,
+                              false),
                           prepareSection(
-                              "Status",
+                              AppLocalizations.of(context).translate("status"),
                               _mediaDetails['status'] +
                                   ' (' +
                                   formatDate(_mediaDetails['release_date']) +
                                   ')',
                               false),
-                          prepareSection("Runtime",
-                              formatRuntime(_mediaDetails['runtime']), false),
                           prepareSection(
-                              "Hompage", _mediaDetails['homepage'], true),
+                              AppLocalizations.of(context).translate("runtime"),
+                              formatRuntime(_mediaDetails['runtime']),
+                              false),
+                          prepareSection(
+                              AppLocalizations.of(context).translate("hompage"),
+                              _mediaDetails['homepage'],
+                              true),
                           prepareSection("Imdb",
                               getImdbUrl(_mediaDetails['imdb_id']), true),
                           prepareSection(
@@ -328,13 +335,10 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
       padding: const EdgeInsets.symmetric(vertical: 3.0),
       child: Row(children: <Widget>[
         GestureDetector(
-          //onTap: () => scrapy(movie.url),
-          //onTap: () => launchUrl(movie.url),
           onTap: () => goToMoviePlay(context, movie, widget._mediaItem),
           child: Icon(
             Icons.play_circle_filled,
             size: 42,
-            //color: salmon,
           ),
         ),
         Container(

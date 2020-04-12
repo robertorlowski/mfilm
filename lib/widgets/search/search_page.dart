@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
+import 'package:mfilm/i18/app_localizations.dart';
 import 'package:mfilm/util/mediaproviders.dart';
 import 'package:mfilm/util/utils.dart';
 import 'package:mfilm/model/searchresult.dart';
@@ -21,15 +22,6 @@ class _SearchPageState extends State<SearchScreen> {
   LoadingState _currentState = LoadingState.WAITING;
   PublishSubject<String> querySubject = PublishSubject();
   TextEditingController textController = TextEditingController();
-
-  _SearchPageState() {
-    searchBar = SearchBar(
-        inBar: true,
-        controller: textController,
-        setState: setState,
-        buildDefaultAppBar: _buildAppBar,
-        onSubmitted: querySubject.add);
-  }
 
   @override
   void initState() {
@@ -68,6 +60,16 @@ class _SearchPageState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (searchBar == null) {
+      searchBar = SearchBar(
+          hintText: AppLocalizations.of(context).translate("search"),
+          inBar: true,
+          controller: textController,
+          setState: setState,
+          buildDefaultAppBar: _buildAppBar,
+          onSubmitted: querySubject.add);
+    }
+
     return Scaffold(
         appBar: searchBar.build(context), body: _buildContentSection());
   }
@@ -75,9 +77,13 @@ class _SearchPageState extends State<SearchScreen> {
   Widget _buildContentSection() {
     switch (_currentState) {
       case LoadingState.WAITING:
-        return Center(child: Text("Search for movies, shows and actors"));
+        return Center(
+            child: Text(
+                AppLocalizations.of(context).translate("search_for_movies")));
       case LoadingState.ERROR:
-        return Center(child: Text("An error occured"));
+        return Center(
+            child: Text(
+                AppLocalizations.of(context).translate("an_error_occured")));
       case LoadingState.LOADING:
         return Center(
           child: CircularProgressIndicator(),
@@ -85,7 +91,8 @@ class _SearchPageState extends State<SearchScreen> {
       case LoadingState.DONE:
         return (_resultList == null || _resultList.length == 0)
             ? Center(
-                child: Text("Unforunately there aren't any matching results!"))
+                child: Text(AppLocalizations.of(context)
+                    .translate("unforunately_there_no_matching_results")))
             : ListView.builder(
                 itemCount: _resultList.length,
                 itemBuilder: (BuildContext context, int index) =>
@@ -97,7 +104,7 @@ class _SearchPageState extends State<SearchScreen> {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-        title: Text('Search Movies'),
+        title: Text(AppLocalizations.of(context).translate("search_movies")),
         actions: [searchBar.getSearchAction(context)]);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:mfilm/util/constants.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db;
 
 class DBConnection {
@@ -15,7 +16,7 @@ class DBConnection {
 
     if (_db == null) {
       try {
-        _db = Db(_getConnectionString());
+        _db = Db(MONGODB_KEY);
       } catch (e) {
         print(e);
       }
@@ -27,10 +28,6 @@ class DBConnection {
     }
 
     return _db;
-  }
-
-  _getConnectionString() {
-    return "mongodb://mfilm:Proste123!@ds229438.mlab.com:29438/mfilm";
   }
 
   closeConnection(Db _db) {

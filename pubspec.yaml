@@ -19,21 +19,21 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
+  provider: ^3.1.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   http: ">= 0.12.0 <0.13.0"
   url_launcher: "^3.0.0"
-  intl: "^0.15.2"
+  intl: "^0.16.0"
   flutter_search_bar: "^2.0.2"
   rxdart: "^0.18.0"
   scoped_model: "^1.0.1"
   shared_preferences: "^0.5.6"
-  carousel_slider: ^1.4.1
   youtube_player_flutter: ^6.1.0+4
-  scrapy: ^0.0.3
-  html: ^0.14.0+3
   chewie: ^0.9.8+1
   video_player: ^0.10.8+1
   auto_orientation: ^0.0.2
@@ -89,3 +89,5 @@ flutter:
     - assets/placeholder.jpg
     - assets/colorful-toothed-wheels.jpg
     - assets/mfilm.png
+    - i18n/en.json
+    - i18n/pl.json

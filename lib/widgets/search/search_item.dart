@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mfilm/i18/app_localizations.dart';
 import 'package:mfilm/model/mediaitem.dart';
 import 'package:mfilm/model/searchresult.dart';
 import 'package:mfilm/util/mediaproviders.dart';
@@ -38,7 +39,10 @@ class SearchItemCard extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(4.0))),
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
-                      child: Text(item.mediaTypeName.toUpperCase(),
+                      child: Text(
+                          AppLocalizations.of(context)
+                              .translate(item.mediaTypeName)
+                              .toUpperCase(),
                           style: TextStyle(color: colorAccent)),
                     ),
                   ),

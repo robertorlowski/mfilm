@@ -25,7 +25,8 @@ class ApiClientDb {
   factory ApiClientDb() => _client;
 
   Future<dynamic> _getJson(Uri uri) async {
-    var response = await (await _http.getUrl(uri)).close();
+    var ppp = await _http.getUrl(uri);
+    var response = await ppp.close();
     var transformedResponse = await response.transform(utf8.decoder).join();
     return json.decode(transformedResponse);
   }
@@ -39,8 +40,9 @@ class ApiClientDb {
           .find(where
               .eq("status", "Released")
               .sortBy(category, descending: true)
-              .skip((50 * (page - 1)) + 1)
-              .limit(50 * page))
+              .sortBy("Id")
+              .skip((50 * (page - 1)))
+              .limit(50))
           .map<MediaItem>((item) => MediaItem(item, MediaType.db))
           .where((item) => item.posterPath != "" || item.backdropPath != "")
           .toList();
@@ -60,8 +62,9 @@ class ApiClientDb {
               .eq("status", "Released")
               .oneFrom("genres", genreIDs)
               .sortBy(sortBy, descending: true)
-              .skip((50 * (page - 1)) + 1)
-              .limit(50 * page))
+              .sortBy("Id")
+              .skip((50 * (page - 1)))
+              .limit(50))
           .map<MediaItem>((item) => MediaItem(item, MediaType.db))
           .where((item) => item.posterPath != "" || item.backdropPath != "")
           .toList();

@@ -26,9 +26,9 @@ class SearchResult {
       case "db":
       case "movie":
       case "tv":
-        return "Film";
+        return "movie";
       case "person":
-        return "Aktor";
+        return "person";
       default:
         return "";
     }

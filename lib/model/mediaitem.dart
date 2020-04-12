@@ -14,11 +14,6 @@ class MediaItem {
   String overview;
   String releaseDate;
   List<Movie> movieIds = const <Movie>[];
-  //"https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4";
-  //"https://vcze602.cda.pl/PE_GXJTYIK3q7xTc32SxJA/1582713422/lq1da5e89c9fdc923830643648585c95c1.mp4";
-  //"https://www.cda.pl/video/346890198"
-  //"https://ebd.cda.pl/620x368/346890198",
-
   List<int> genreIds;
   List<String> videoIds;
 
@@ -58,7 +53,9 @@ class MediaItem {
                     MovieType.CDA.toString(),
                     value["link"],
                     value["title"],
-                    int.parse(value["time_min"])))
+                    value["time_min"] == null
+                        ? null
+                        : int.parse(value["time_min"].toString())))
                 .toList();
 
   MediaItem._internalFromJson(Map jsonMap, {MediaType type: MediaType.video})
@@ -92,7 +89,10 @@ class MediaItem {
         'overview': overview,
         'releaseDate': releaseDate,
         'genres': genreIds,
-        'site': videoIds,
+        'site': videoIds == null ? [] : videoIds,
+        'cdaIds': movieIds == null
+            ? []
+            : movieIds.map((Movie item) => item..toJson()).toList()
       };
     else
       return {

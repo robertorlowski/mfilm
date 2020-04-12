@@ -85,16 +85,6 @@ class MediaListItem extends StatelessWidget {
                       ),
                       tag: "Movie-Tag-${_picture.id}",
                     ),
-                    /*
-                    new Container(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                            icon: Icon(model.isItemFavorite(picture)
-                                ? Icons.favorite
-                                : Icons.favorite_border),
-                            color: Colors.white,
-                            onPressed: () => model.toggleFavorites(picture))),
-                    */
                     new Padding(
                       padding: new EdgeInsets.fromLTRB(0, 210, 0, 0),
                       child: Container(

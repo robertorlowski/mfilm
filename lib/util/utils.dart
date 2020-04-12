@@ -11,11 +11,11 @@ final sourceFormat = DateFormat('yyyy-MM-dd');
 final dateFormat = DateFormat.yMMMMd("en_US");
 final String sysLanguage = ui.window.locale.languageCode;
 
-final Map<String, String> moveSortBy = {
-  "popularity": "Popularność",
-  "vote_average": "Średnia ocena",
-  "release_date": "Data wydania"
-};
+final List<String> moveSortBy = [
+  "release_date",
+  "popularity",
+  "vote_average",
+];
 
 getSortByKey(MediaType mediaType, String key) {
   if (MediaType.db == mediaType) {
@@ -72,17 +72,6 @@ String getGenreIDs(List<int> genreIds) {
   buffer.writeAll(genreIds, ", ");
   return buffer.toString();
 }
-
-String concatListToString(List<dynamic> data, String mapKey) {
-  StringBuffer buffer = StringBuffer();
-  buffer.writeAll(data.map<String>((map) => map[mapKey]).toList(), ", ");
-  return buffer.toString();
-}
-
-String formatSeasonsAndEpisodes(int numberOfSeasons, int numberOfEpisodes) =>
-    '$numberOfSeasons Seasons and $numberOfEpisodes Episodes';
-
-String formatNumberToDollars(int amount) => '\$${dollarFormat.format(amount)}';
 
 String formatDate(String date) {
   try {

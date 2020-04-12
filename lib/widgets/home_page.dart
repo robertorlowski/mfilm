@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:mfilm/i18/app_localizations.dart';
 import 'package:mfilm/model/app_model.dart';
 import 'package:mfilm/model/genres.dart';
 import 'package:mfilm/model/mediaitem.dart';
@@ -19,7 +20,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   MediaType mediaType = MediaType.db;
   List<Widget> rowsMedia;
-  String sortValue = moveSortBy.keys.first;
+
   List<Genres> genresList = [];
 
   final MediaProvider videoProvider = MovieProviderVideo(sysLanguage);
@@ -59,7 +60,7 @@ class HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(0.0),
               child: Image(image: AssetImage('assets/mfilm.png'))),
           ListTile(
-            title: Text("Filmy",
+            title: Text(AppLocalizations.of(context).translate("movies"),
                 style: TextStyle(
                     fontSize: 16.0,
                     color: (mediaType == MediaType.db)
@@ -76,7 +77,7 @@ class HomePageState extends State<HomePage> {
             },
           ),
           ListTile(
-            title: Text("Zwiastuny filmów",
+            title: Text(AppLocalizations.of(context).translate("trailers"),
                 style: TextStyle(
                     fontSize: 16.0,
                     color: (mediaType == MediaType.video)
@@ -96,7 +97,7 @@ class HomePageState extends State<HomePage> {
             height: 5.0,
           ),
           ListTile(
-            title: Text("Ustawienia",
+            title: Text(AppLocalizations.of(context).translate("settings"),
                 style: TextStyle(
                     fontSize: 16.0,
                     color: Theme.of(context).textTheme.subhead.color)),
@@ -106,7 +107,7 @@ class HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text("Sortuj po:",
+                Text(AppLocalizations.of(context).translate("sort_by"),
                     style: TextStyle(
                         fontSize: 16.0,
                         color: Theme.of(context).textTheme.subhead.color)),
@@ -127,16 +128,16 @@ class HomePageState extends State<HomePage> {
                                 color: Colors.white54,
                               ),
                               onChanged: (String newValue) {
-                                model.setDefaultSortBy(newValue);
+                                model.defaultSortBy = newValue;
                                 _changeMediaType(mediaType);
                                 Navigator.of(context).pop();
                               },
-                              items: moveSortBy.entries
+                              items: moveSortBy
                                   .map<DropdownMenuItem<String>>((ooo) {
                                 return DropdownMenuItem<String>(
-                                  value: ooo.key,
-                                  child: Text(ooo.value),
-                                );
+                                    value: ooo,
+                                    child: Text(AppLocalizations.of(context)
+                                        .translate(ooo)));
                               }).toList()),
                     )),
               ],
@@ -147,7 +148,7 @@ class HomePageState extends State<HomePage> {
           ),
           ListTile(
             title: Text(
-              "Zamknij aplikację",
+              AppLocalizations.of(context).translate("close_app"),
               style: TextStyle(
                   fontSize: 16.0,
                   color: Theme.of(context).textTheme.subhead.color),
@@ -195,7 +196,7 @@ class HomePageState extends State<HomePage> {
         appBar: prepareAppBar(),
         drawer: ScopedModelDescendant<AppModel>(
           builder: (context, child, AppModel model) =>
-              prepareDrawer(model.getDefaultSortBy(mediaType)),
+              prepareDrawer(model.defaultSortBy),
         ),
         body: CustomScrollView(
             slivers: rowsMedia == null

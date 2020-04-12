@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mfilm/i18/app_localizations.dart';
 import 'package:mfilm/model/mediaitem.dart';
 import 'package:mfilm/util/mediaproviders.dart';
 import 'package:mfilm/util/utils.dart';
@@ -64,7 +65,7 @@ class _MediaListState extends State<MediaList> {
               return MediaListItem(_movies[index], widget.provider);
             });
       case LoadingState.ERROR:
-        return Text('Sorry, there was an error loading the data!');
+        return Text(AppLocalizations.of(context).translate("an_error_occured"));
       case LoadingState.LOADING:
         return CircularProgressIndicator();
       default:
