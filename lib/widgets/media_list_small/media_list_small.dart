@@ -106,6 +106,8 @@ class _MediaListSmallState extends State<MediaListSmall> {
             itemBuilder: (BuildContext context, int index) {
               if (!_isLoading && index > (_movies.length * 0.7)) {
                 _loadNextPage(sortBy);
+              } else {
+                _loadingState = LoadingState.INIT;
               }
               return MediaListSmallItem(_movies[index], widget.provider);
             });

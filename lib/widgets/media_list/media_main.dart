@@ -9,7 +9,8 @@ class MainList extends StatefulWidget {
   final MediaProvider provider;
   final MediaType mediaType;
 
-  MainList(this.mediaType, this.genreIDs, this.provider);
+  MainList(this.mediaType, this.genreIDs, this.provider, String sorBy)
+      : super(key: Key(sorBy));
 
   @override
   MainListState createState() {

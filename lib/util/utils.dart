@@ -14,7 +14,7 @@ final String sysLanguage = ui.window.locale.languageCode;
 final List<String> moveSortBy = [
   "release_date",
   "popularity",
-  "vote_average",
+  //"vote_average",
 ];
 
 getSortByKey(MediaType mediaType, String key) {
@@ -34,7 +34,7 @@ getSortByKey(MediaType mediaType, String key) {
       case 'vote_average':
         return 'vote_average.desc';
       case "release_date":
-        return 'release_date.desc';
+        return 'primary_release_date.desc';
     }
   }
 }

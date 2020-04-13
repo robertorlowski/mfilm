@@ -6,10 +6,10 @@ import 'package:mfilm/util/utils.dart';
 import 'package:mfilm/widgets/media_list/media_list_item.dart';
 
 class MediaList extends StatefulWidget {
-  MediaList(this.provider, this.category, {Key key}) : super(key: key);
+  MediaList(this.provider, this.sortBy, {Key key}) : super(key: key);
 
   final MediaProvider provider;
-  final String category;
+  final String sortBy;
 
   @override
   _MediaListState createState() => _MediaListState();
@@ -25,7 +25,7 @@ class _MediaListState extends State<MediaList> {
     _isLoading = true;
     try {
       var nextMovies =
-          await widget.provider.loadMedia(widget.category, page: _pageNumber);
+          await widget.provider.loadMedia(widget.sortBy, page: _pageNumber);
       setState(() {
         _loadingState = LoadingState.DONE;
         _movies.addAll(nextMovies);

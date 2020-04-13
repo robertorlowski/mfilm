@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mfilm/i18/app_localizations.dart';
 import 'package:mfilm/model/mediaitem.dart';
 import 'package:mfilm/util/mediaproviders.dart';
+import 'package:mfilm/util/utils.dart';
 import 'package:mfilm/widgets/media_list/media_list.dart';
 
 class MainColWidget extends StatefulWidget {
@@ -60,11 +61,11 @@ class MainColWidgetState extends State<MainColWidget> {
     } else if (widget._mediaType == MediaType.db) {
       return [
         BottomNavigationBarItem(
-            icon: Icon(Icons.thumb_up),
-            title: Text(AppLocalizations.of(context).translate("popular"))),
+            icon: Icon(Icons.calendar_today),
+            title: Text(AppLocalizations.of(context).translate(moveSortBy[0]))),
         BottomNavigationBarItem(
             icon: Icon(Icons.star),
-            title: Text(AppLocalizations.of(context).translate("top_rated"))),
+            title: Text(AppLocalizations.of(context).translate(moveSortBy[1]))),
       ];
     } else {
       return [];
@@ -80,8 +81,12 @@ class MainColWidgetState extends State<MainColWidget> {
       ];
     } else if (widget._mediaType == MediaType.db) {
       return <Widget>[
-        MediaList(widget._provider, "popularity", key: Key("db-popularity")),
-        MediaList(widget._provider, "voteAverage", key: Key("db-voteAverage")),
+        MediaList(
+            widget._provider, getSortByKey(widget._mediaType, moveSortBy[0]),
+            key: Key(widget._mediaType.toString() + moveSortBy[0])),
+        MediaList(
+            widget._provider, getSortByKey(widget._mediaType, moveSortBy[1]),
+            key: Key(widget._mediaType.toString() + moveSortBy[1])),
       ];
     } else {
       return [];

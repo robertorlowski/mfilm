@@ -7,9 +7,10 @@ import 'package:mfilm/widgets/media_list/media_main.dart';
 class MainRowsWidget extends StatefulWidget {
   final MediaProvider _provider;
   final MediaType _mediaType;
+  final String _sortBy;
 
-  MainRowsWidget(this._provider, this._mediaType)
-      : super(key: Key(_mediaType.toString()));
+  MainRowsWidget(this._provider, this._mediaType, this._sortBy)
+      : super(key: Key(_mediaType.toString() + _sortBy));
 
   @override
   State createState() => MainRowsWidgetState();
@@ -21,8 +22,8 @@ class MainRowsWidgetState extends State<MainRowsWidget> {
     try {
       List<Genres> list = await widget._provider.loadGenres();
       for (Genres ggg in list) {
-        _rrr.add(_crrateRow(
-            new MainList(widget._mediaType, [ggg], widget._provider)));
+        _rrr.add(_crrateRow(new MainList(
+            widget._mediaType, [ggg], widget._provider, widget._sortBy)));
       }
       return _rrr;
     } catch (e) {
@@ -49,9 +50,7 @@ class MainRowsWidgetState extends State<MainRowsWidget> {
         if (snapshot.hasData) {
           return CustomScrollView(slivers: snapshot.data);
         } else {
-          return CustomScrollView(slivers: <Widget>[
-            _crrateRow(new Center(child: CircularProgressIndicator()))
-          ]);
+          return new Center(child: CircularProgressIndicator());
         }
       },
     );
