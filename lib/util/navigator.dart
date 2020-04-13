@@ -17,7 +17,7 @@ goToMovieDetails(
 }
 
 goToMoviePlay(BuildContext context, Movie movie, MediaItem mediaItem) {
-  if (movie.url.contains(".mp4")) {
+  if (movie.url != null && movie.url.contains(".mp4")) {
     _pushWidgetWithFade(context, PlayScreen(movie, mediaItem));
   } else {
     launchUrl(movie.url);

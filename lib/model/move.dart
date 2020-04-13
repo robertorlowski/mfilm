@@ -11,7 +11,7 @@ class Movie {
     return {
       'site': site,
       'type': type,
-      'url': url,
+      'link': url,
       'title': title,
       'time_min': time.toString()
     };
