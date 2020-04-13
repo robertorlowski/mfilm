@@ -12,8 +12,8 @@ final dateFormat = DateFormat.yMMMMd("en_US");
 final String sysLanguage = ui.window.locale.languageCode;
 
 final List<String> moveSortBy = [
-  "release_date",
   "popularity",
+  "release_date",
   //"vote_average",
 ];
 

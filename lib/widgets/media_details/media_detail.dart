@@ -165,9 +165,14 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
             ),
             Container(
               margin: const EdgeInsets.fromLTRB(0, 0, 0, 16),
-              child: Text(mediaItem.title,
-                  maxLines: 1,
-                  style: TextStyle(color: Color(0xFFEEEEEE), fontSize: 20.0)),
+              //padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+              child: Text(
+                mediaItem.title,
+                maxLines: 1,
+                style: TextStyle(color: Color(0xFFEEEEEE), fontSize: 18.0),
+                overflow: TextOverflow.ellipsis,
+                softWrap: false,
+              ),
             ),
           ],
         ),

@@ -39,25 +39,27 @@ class MediaListSmallItem extends StatelessWidget {
                         width: 160,
                         height: 30,
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            SizedBox(
-                              width: 10,
-                            ),
-                            TextBubble(
-                              picture.getReleaseYear().toString(),
-                              backgroundColor: Color(0xffF47663),
-                            ),
-                            SizedBox(
-                              width: 7,
-                            ),
-                            TextBubble(
-                              picture.voteAverage.toString(),
-                              backgroundColor: Color(0xffF47663),
-                            ),
-                            SizedBox(
-                              width: 50,
-                            ),
+                            Row(children: <Widget>[
+                              SizedBox(
+                                width: 5,
+                              ),
+                              TextBubble(
+                                picture.getReleaseYear().toString(),
+                                backgroundColor: Color(0xffF47663),
+                              ),
+                              SizedBox(
+                                width: 7,
+                              ),
+                              TextBubble(
+                                picture.voteAverage.toString(),
+                                backgroundColor: Color(0xffF47663),
+                              ),
+                            ]),
                             Container(
+                                padding: EdgeInsets.all(5),
                                 height: 42,
                                 child: InkWell(
                                   onTap: () => model.toggleFavorites(picture),
@@ -65,7 +67,7 @@ class MediaListSmallItem extends StatelessWidget {
                                     model.isItemFavorite(picture)
                                         ? Icons.favorite
                                         : Icons.favorite_border,
-                                    size: 20.0,
+                                    size: 24.0,
                                     color: Colors.grey[200],
                                   ),
                                 )),

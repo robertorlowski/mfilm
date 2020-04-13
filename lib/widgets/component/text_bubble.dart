@@ -15,12 +15,12 @@ class TextBubble extends StatelessWidget {
       decoration: BoxDecoration(
           color: backgroundColor,
           shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(12.0)),
+          borderRadius: BorderRadius.circular(20.0)),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 6.0),
         child: Text(
           text,
-          style: TextStyle(color: textColor, fontSize: 12.0),
+          style: TextStyle(color: textColor, fontSize: 14.0),
         ),
       ),
     );

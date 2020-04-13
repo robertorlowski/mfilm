@@ -3,6 +3,7 @@ import 'package:mfilm/model/app_model.dart';
 import 'package:mfilm/model/mediaitem.dart';
 import 'package:mfilm/util/mediaproviders.dart';
 import 'package:mfilm/util/navigator.dart';
+import 'package:mfilm/widgets/component/text_bubble.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class MediaListItem extends StatelessWidget {
@@ -16,14 +17,17 @@ class MediaListItem extends StatelessWidget {
         builder: (context, child, AppModel model) => Container(
               padding: EdgeInsets.fromLTRB(10.0, 10, 10, 10),
               child: Row(
-                children: [
+                children: <Widget>[
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
                           child: Text(_picture.title,
                               maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: false,
                               style: Theme.of(context)
                                   .textTheme
                                   .subhead
@@ -33,30 +37,32 @@ class MediaListItem extends StatelessWidget {
                       ],
                     ),
                   ),
+                  TextBubble(
+                    _picture.getReleaseYear().toString(),
+                    backgroundColor: Color(0xffF47663),
+                  ),
+                  SizedBox(
+                    width: 7,
+                  ),
+                  TextBubble(
+                    _picture.voteAverage.toString(),
+                    backgroundColor: Color(0xffF47663),
+                  ),
+                  SizedBox(
+                    width: 7,
+                  ),
                   Container(
-                    width: 10.0,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[],
-                  ),
-                  Container(
-                    width: 14.0,
-                  ),
-                  new Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        InkWell(
-                          onTap: () => model.toggleFavorites(_picture),
-                          child: Icon(
-                            model.isItemFavorite(_picture)
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            size: 20.0,
-                            color: Colors.grey[200],
-                          ),
-                        )
-                      ]),
+                      height: 42,
+                      child: InkWell(
+                        onTap: () => model.toggleFavorites(_picture),
+                        child: Icon(
+                          model.isItemFavorite(_picture)
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          size: 24.0,
+                          color: Colors.grey[200],
+                        ),
+                      )),
                 ],
               ),
             ));
@@ -88,7 +94,7 @@ class MediaListItem extends StatelessWidget {
                     new Padding(
                       padding: new EdgeInsets.fromLTRB(0, 210, 0, 0),
                       child: Container(
-                          height: 42,
+                          height: 40,
                           decoration: new BoxDecoration(
                               color: Color.fromRGBO(0, 0, 0, 0.5)),
                           child: _getTitleSection(context)),
