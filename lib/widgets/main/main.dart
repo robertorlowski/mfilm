@@ -9,18 +9,21 @@ import 'package:mfilm/util/mediaproviders.dart';
 import 'package:mfilm/util/navigator.dart';
 import 'package:mfilm/util/styles.dart';
 import 'package:mfilm/util/utils.dart';
-import 'package:mfilm/widgets/media_list/media_main.dart';
+import 'package:mfilm/widgets/main/main_rows.dart';
+import 'package:mfilm/widgets/main/main_col.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class HomePage extends StatefulWidget {
+enum TypeView { ROW, COL }
+
+class MainPage extends StatefulWidget {
   @override
-  State createState() => HomePageState();
+  State createState() => MainPageState();
 }
 
-class HomePageState extends State<HomePage> {
+class MainPageState extends State<MainPage> {
   MediaType mediaType = MediaType.db;
   List<Widget> rowsMedia;
-
+  TypeView _typeView = TypeView.COL;
   List<Genres> genresList = [];
 
   final MediaProvider videoProvider = MovieProviderVideo(sysLanguage);
@@ -35,10 +38,27 @@ class HomePageState extends State<HomePage> {
     }
   }
 
+  _changeView() {
+    setState(() {
+      if (TypeView.ROW == _typeView) {
+        _typeView = TypeView.COL;
+      } else {
+        _typeView = TypeView.ROW;
+      }
+    });
+  }
+
   AppBar prepareAppBar() {
     return AppBar(
       backgroundColor: Color.fromRGBO(0, 0, 0, 0.4),
       actions: <Widget>[
+        TypeView.ROW == _typeView
+            ? IconButton(
+                icon: Icon(Icons.view_stream, color: Colors.white),
+                onPressed: () => _changeView())
+            : IconButton(
+                icon: Icon(Icons.view_module, color: Colors.white),
+                onPressed: () => _changeView()),
         IconButton(
             icon: Icon(Icons.favorite, color: Colors.white),
             onPressed: () => goToFavorites(context, mediaType, _getProvider())),
@@ -162,60 +182,31 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  prepareList(Widget widget) {
-    return SliverList(
-      delegate: SliverChildListDelegate(<Widget>[
-        Container(
-          decoration: BoxDecoration(color: const Color(0xff222128)),
-          child: widget,
-        ),
-      ]),
-    );
-  }
-
-  _prepareContent() async {
-    setState(() => rowsMedia = []);
-    List<Widget> lll = new List<Widget>();
-    try {
-      List<Genres> list = await _getProvider().loadGenres();
-      for (Genres ggg in list) {
-        lll.add(prepareList(new MainList(mediaType, [ggg], _getProvider())));
-      }
-      setState(() => rowsMedia = lll);
-    } catch (e) {
-      e.toString();
-    }
-  }
-
   @override
   Widget build(
     BuildContext context,
   ) {
     return Scaffold(
-        backgroundColor: primary,
-        appBar: prepareAppBar(),
-        drawer: ScopedModelDescendant<AppModel>(
-          builder: (context, child, AppModel model) =>
-              prepareDrawer(model.defaultSortBy),
-        ),
-        body: CustomScrollView(
-            slivers: rowsMedia == null
-                ? <Widget>[
-                    prepareList(new Center(child: CircularProgressIndicator()))
-                  ]
-                : rowsMedia));
+      backgroundColor: primary,
+      appBar: prepareAppBar(),
+      drawer: ScopedModelDescendant<AppModel>(
+        builder: (context, child, AppModel model) =>
+            prepareDrawer(model.defaultSortBy),
+      ),
+      body: _typeView == TypeView.ROW
+          ? MainRowsWidget(_getProvider(), mediaType)
+          : MainColWidget(_getProvider(), mediaType),
+    );
   }
 
   void _changeMediaType(MediaType type) {
     setState(() {
       mediaType = type;
-      _prepareContent();
     });
   }
 
   @override
   void initState() {
-    _prepareContent();
     super.initState();
   }
 

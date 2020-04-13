@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mfilm/i18/app_localizations.dart';
 import 'package:mfilm/model/app_model.dart';
-import 'package:mfilm/widgets/home_page.dart';
+import 'package:mfilm/widgets/main/main.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'dart:ui' as ui;
 
@@ -26,7 +26,7 @@ class FilmApp extends StatelessWidget {
         ],
         title: 'mFilm',
         theme: model.theme,
-        home: HomePage(),
+        home: MainPage(),
       ),
     );
   }
