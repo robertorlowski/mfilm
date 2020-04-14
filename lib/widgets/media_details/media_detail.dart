@@ -82,20 +82,17 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
       if (this._videos.isEmpty) {
         this._videos.add(_vvv.first);
       }
-
-      setState(() => {});
     } catch (e) {
-      print(e.toString());
+      this._videos = [];
     }
+    setState(() => {});
   }
 
   void _loadDetails() async {
     try {
       dynamic details = await widget.provider.getDetails(widget._mediaItem.id);
       setState(() => _mediaDetails = details);
-    } catch (e) {
-      e.toString();
-    }
+    } catch (e) {}
   }
 
   @override
@@ -112,8 +109,15 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
 
   Widget _buildAppBar(MediaItem movie) {
     return SliverAppBar(
-        expandedHeight: 320.0,
+        expandedHeight: 330.0,
         pinned: false,
+        title: Text(
+          widget._mediaItem.title,
+          maxLines: 1,
+          style: TextStyle(color: Color(0xFFEEEEEE), fontSize: 18.0),
+          overflow: TextOverflow.ellipsis,
+          softWrap: false,
+        ),
         actions: <Widget>[
           ScopedModelDescendant<AppModel>(
               builder: (context, child, AppModel model) => Padding(
@@ -150,17 +154,7 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              height: 45.0,
-            ),
-            Container(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
-              child: Text(
-                mediaItem.title,
-                maxLines: 1,
-                style: TextStyle(color: Color(0xFFEEEEEE), fontSize: 16.0),
-                overflow: TextOverflow.ellipsis,
-                softWrap: false,
-              ),
+              height: 80.0,
             ),
           ],
         ),
