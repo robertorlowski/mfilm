@@ -8,8 +8,7 @@ import 'package:mfilm/widgets/media_list_small/media_list_item_small.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class MediaListSmall extends StatefulWidget {
-  MediaListSmall(this.mediaType, this.provider, this.genreIDs, {Key key})
-      : super(key: Key(mediaType.toString() + getGenreString(genreIDs)));
+  MediaListSmall(this.mediaType, this.provider, this.genreIDs);
 
   final MediaProvider provider;
   final List<Genres> genreIDs;
@@ -84,7 +83,6 @@ class _MediaListSmallState extends State<MediaListSmall> {
           ),
           Container(
             height: 280,
-            //margin: EdgeInsets.symmetric(horizontal: 10),
             child: _getContentSection(model.defaultSortBy),
           )
         ],
@@ -106,8 +104,6 @@ class _MediaListSmallState extends State<MediaListSmall> {
             itemBuilder: (BuildContext context, int index) {
               if (!_isLoading && index > (_movies.length * 0.7)) {
                 _loadNextPage(sortBy);
-              } else {
-                _loadingState = LoadingState.INIT;
               }
               return MediaListSmallItem(_movies[index], widget.provider);
             });

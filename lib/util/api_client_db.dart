@@ -41,8 +41,8 @@ class ApiClientDb {
               .eq("status", "Released")
               .sortBy(category, descending: true)
               .sortBy("Id")
-              .skip((20 * (page - 1)))
-              .limit(20))
+              .skip((10 * (page - 1)))
+              .limit(10))
           .map<MediaItem>((item) => MediaItem(item, MediaType.db))
           .where((item) => item.posterPath != "" || item.backdropPath != "")
           .toList();
@@ -63,8 +63,8 @@ class ApiClientDb {
               .oneFrom("genres", genreIDs)
               .sortBy(sortBy, descending: true)
               .sortBy("Id")
-              .skip((20 * (page - 1)))
-              .limit(20))
+              .skip((10 * (page - 1)))
+              .limit(10))
           .map<MediaItem>((item) => MediaItem(item, MediaType.db))
           .where((item) => item.posterPath != "" || item.backdropPath != "")
           .toList();

@@ -112,7 +112,7 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
 
   Widget _buildAppBar(MediaItem movie) {
     return SliverAppBar(
-        expandedHeight: 315.0,
+        expandedHeight: 320.0,
         pinned: false,
         actions: <Widget>[
           ScopedModelDescendant<AppModel>(
@@ -133,18 +133,7 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
                 _buildMetaSection(movie),
                 Padding(
                     padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                    child: (_videos == null)
-                        ? Hero(
-                            tag: "Movie-Tag-${widget._mediaItem.id}",
-                            child: FadeInImage.assetNetwork(
-                                fit: BoxFit.fill,
-                                height: 250,
-                                placeholder: "assets/placeholder.jpg",
-                                image: widget._mediaItem.backdropPath != ""
-                                    ? widget._mediaItem.getBackDropUrl()
-                                    : widget._mediaItem.getPosterUrl()),
-                          )
-                        : TrailerSection(_videos)),
+                    child: TrailerSection(_videos, widget._mediaItem)),
               ],
             ),
           ),
@@ -161,15 +150,14 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              height: 50.0,
+              height: 45.0,
             ),
             Container(
-              margin: const EdgeInsets.fromLTRB(0, 0, 0, 16),
-              //padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
               child: Text(
                 mediaItem.title,
                 maxLines: 1,
-                style: TextStyle(color: Color(0xFFEEEEEE), fontSize: 18.0),
+                style: TextStyle(color: Color(0xFFEEEEEE), fontSize: 16.0),
                 overflow: TextOverflow.ellipsis,
                 softWrap: false,
               ),

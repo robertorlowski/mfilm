@@ -15,7 +15,7 @@ class MediaListItem extends StatelessWidget {
   Widget _getTitleSection(BuildContext context) {
     return ScopedModelDescendant<AppModel>(
         builder: (context, child, AppModel model) => Container(
-              padding: EdgeInsets.fromLTRB(10.0, 10, 10, 10),
+              padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -32,7 +32,7 @@ class MediaListItem extends StatelessWidget {
                                   .textTheme
                                   .subhead
                                   .copyWith(
-                                      color: Colors.grey[200], fontSize: 18)),
+                                      color: Colors.grey[200], fontSize: 17)),
                         ),
                       ],
                     ),
@@ -52,17 +52,16 @@ class MediaListItem extends StatelessWidget {
                     width: 7,
                   ),
                   Container(
-                      height: 42,
                       child: InkWell(
-                        onTap: () => model.toggleFavorites(_picture),
-                        child: Icon(
-                          model.isItemFavorite(_picture)
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          size: 24.0,
-                          color: Colors.grey[200],
-                        ),
-                      )),
+                    onTap: () => model.toggleFavorites(_picture),
+                    child: Icon(
+                      model.isItemFavorite(_picture)
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      size: 22.0,
+                      color: Colors.grey[200],
+                    ),
+                  )),
                 ],
               ),
             ));
