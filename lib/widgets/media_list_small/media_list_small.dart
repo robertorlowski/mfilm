@@ -18,7 +18,8 @@ class MediaListSmall extends StatefulWidget {
   _MediaListSmallState createState() => _MediaListSmallState();
 }
 
-class _MediaListSmallState extends State<MediaListSmall> {
+class _MediaListSmallState extends State<MediaListSmall>
+    with AutomaticKeepAliveClientMixin {
   List<MediaItem> _movies = List();
   int _pageNumber = 1;
   LoadingState _loadingState = LoadingState.INIT;
@@ -65,6 +66,7 @@ class _MediaListSmallState extends State<MediaListSmall> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return ScopedModelDescendant<AppModel>(
       builder: (
         context,
@@ -115,4 +117,7 @@ class _MediaListSmallState extends State<MediaListSmall> {
         return Container();
     }
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

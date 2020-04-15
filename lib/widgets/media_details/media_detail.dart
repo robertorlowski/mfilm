@@ -109,7 +109,7 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
 
   Widget _buildAppBar(MediaItem movie) {
     return SliverAppBar(
-        expandedHeight: 330.0,
+        expandedHeight: 310.0,
         pinned: false,
         title: Text(
           widget._mediaItem.title,

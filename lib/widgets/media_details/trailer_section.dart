@@ -48,7 +48,7 @@ class TrailerSectionState extends State<TrailerSection> {
                           tag: "Movie-Tag-${widget._mediaItem.id}",
                           child: FadeInImage.assetNetwork(
                               fit: BoxFit.fill,
-                              height: 230,
+                              height: 210,
                               placeholder: "assets/placeholder.jpg",
                               image: widget._mediaItem.backdropPath != ""
                                   ? widget._mediaItem.getBackDropUrl()
