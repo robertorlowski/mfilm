@@ -96,7 +96,7 @@ class MainRowsWidgetState extends State<MainRowsWidget> {
             itemCount: _genres.length,
             itemBuilder: (BuildContext context, int index) {
               if (!_isLoading &&
-                  index > (data.length * 0.8) &&
+                  index > (data.length * 0.6) &&
                   data.length != _genres.length) {
                 _loadNextPage();
               }
