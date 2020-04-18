@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
-import 'package:mfilm/i18/app_localizations.dart';
-import 'package:mfilm/util/mediaproviders.dart';
-import 'package:mfilm/util/utils.dart';
-import 'package:mfilm/model/searchresult.dart';
+import 'package:netfilm/i18/app_localizations.dart';
+import 'package:netfilm/util/mediaproviders.dart';
+import 'package:netfilm/util/utils.dart';
+import 'package:netfilm/model/searchresult.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:mfilm/widgets/search/search_item.dart';
+import 'package:netfilm/widgets/search/search_item.dart';
 
 class SearchScreen extends StatefulWidget {
   final MediaProvider provider;

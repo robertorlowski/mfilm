@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mfilm/i18/app_localizations.dart';
-import 'package:mfilm/model/mediaitem.dart';
-import 'package:mfilm/model/searchresult.dart';
-import 'package:mfilm/util/mediaproviders.dart';
-import 'package:mfilm/util/navigator.dart';
-import 'package:mfilm/util/styles.dart';
+import 'package:netfilm/i18/app_localizations.dart';
+import 'package:netfilm/model/mediaitem.dart';
+import 'package:netfilm/model/searchresult.dart';
+import 'package:netfilm/util/mediaproviders.dart';
+import 'package:netfilm/util/navigator.dart';
+import 'package:netfilm/util/styles.dart';
 
 class SearchItemCard extends StatelessWidget {
   final SearchResult item;

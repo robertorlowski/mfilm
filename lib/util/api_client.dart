@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:intl/intl.dart';
-import 'package:mfilm/model/cast.dart';
-import 'package:mfilm/model/genres.dart';
-import 'package:mfilm/model/mediaitem.dart';
-import 'package:mfilm/model/video.dart';
-import 'package:mfilm/model/searchresult.dart';
+import 'package:netfilm/model/cast.dart';
+import 'package:netfilm/model/genres.dart';
+import 'package:netfilm/model/mediaitem.dart';
+import 'package:netfilm/model/video.dart';
+import 'package:netfilm/model/searchresult.dart';
 
-import 'package:mfilm/util/constants.dart';
-import 'package:mfilm/util/utils.dart';
+import 'package:netfilm/util/constants.dart';
+import 'package:netfilm/util/utils.dart';
 
 class ApiClient {
   static final _client = ApiClient._internal();

@@ -1,8 +1,8 @@
 import 'package:auto_orientation/auto_orientation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mfilm/model/mediaitem.dart';
-import 'package:mfilm/model/move.dart';
+import 'package:netfilm/model/mediaitem.dart';
+import 'package:netfilm/model/move.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
 

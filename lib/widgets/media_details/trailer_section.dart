@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mfilm/i18/app_localizations.dart';
-import 'package:mfilm/model/mediaitem.dart';
-import 'package:mfilm/model/video.dart';
-import 'package:mfilm/widgets/media_details/trailer_card.dart';
+import 'package:netfilm/i18/app_localizations.dart';
+import 'package:netfilm/model/mediaitem.dart';
+import 'package:netfilm/model/video.dart';
+import 'package:netfilm/widgets/media_details/trailer_card.dart';
 
 class TrailerSection extends StatefulWidget {
   final List<Video> _video;

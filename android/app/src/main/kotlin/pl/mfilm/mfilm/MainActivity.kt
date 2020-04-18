@@ -1,4 +1,4 @@
-package pl.mfilm.mfilm
+package pl.netfilm.netfilm
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

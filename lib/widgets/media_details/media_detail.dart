@@ -2,20 +2,20 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mfilm/i18/app_localizations.dart';
-import 'package:mfilm/model/app_model.dart';
-import 'package:mfilm/model/cast.dart';
-import 'package:mfilm/model/genres.dart';
-import 'package:mfilm/model/mediaitem.dart';
-import 'package:mfilm/model/move.dart';
-import 'package:mfilm/model/video.dart';
-import 'package:mfilm/util/mediaproviders.dart';
-import 'package:mfilm/util/navigator.dart';
-import 'package:mfilm/util/styles.dart';
-import 'package:mfilm/util/utils.dart';
-import 'package:mfilm/widgets/component/text_bubble.dart';
-import 'package:mfilm/widgets/media_details/cast_section.dart';
-import 'package:mfilm/widgets/media_details/trailer_section.dart';
+import 'package:netfilm/i18/app_localizations.dart';
+import 'package:netfilm/model/app_model.dart';
+import 'package:netfilm/model/cast.dart';
+import 'package:netfilm/model/genres.dart';
+import 'package:netfilm/model/mediaitem.dart';
+import 'package:netfilm/model/move.dart';
+import 'package:netfilm/model/video.dart';
+import 'package:netfilm/util/mediaproviders.dart';
+import 'package:netfilm/util/navigator.dart';
+import 'package:netfilm/util/styles.dart';
+import 'package:netfilm/util/utils.dart';
+import 'package:netfilm/widgets/component/text_bubble.dart';
+import 'package:netfilm/widgets/media_details/cast_section.dart';
+import 'package:netfilm/widgets/media_details/trailer_section.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class MediaDetailScreen extends StatefulWidget {

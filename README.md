@@ -1,7 +1,7 @@
-# m-film
+# net-Film
 
 ![](screenshot/screenshot_all.jpg)
 
 ## Download application ##
-[Download link - mFilm](https://github.com/robertorlowski/mfilm/releases/latest#link)
+[Download link - netFilm](https://github.com/robertorlowski/netfilm/releases/latest#link)
 

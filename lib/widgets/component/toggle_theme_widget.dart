@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mfilm/model/app_model.dart';
+import 'package:netfilm/model/app_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class ToggleThemeButton extends StatelessWidget {

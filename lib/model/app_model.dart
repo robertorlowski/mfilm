@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:mfilm/model/mediaitem.dart';
-import 'package:mfilm/util/utils.dart';
+import 'package:netfilm/model/mediaitem.dart';
+import 'package:netfilm/util/utils.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

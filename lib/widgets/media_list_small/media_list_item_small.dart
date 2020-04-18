@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mfilm/model/app_model.dart';
-import 'package:mfilm/model/mediaitem.dart';
-import 'package:mfilm/util/mediaproviders.dart';
-import 'package:mfilm/util/navigator.dart';
-import 'package:mfilm/util/styles.dart';
-import 'package:mfilm/widgets/component/text_bubble.dart';
+import 'package:netfilm/model/app_model.dart';
+import 'package:netfilm/model/mediaitem.dart';
+import 'package:netfilm/util/mediaproviders.dart';
+import 'package:netfilm/util/navigator.dart';
+import 'package:netfilm/util/styles.dart';
+import 'package:netfilm/widgets/component/text_bubble.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class MediaListSmallItem extends StatelessWidget {

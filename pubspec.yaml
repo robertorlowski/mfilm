@@ -1,4 +1,4 @@
-name: mfilm
+name: netfilm
 description: Find a movie.
 
 # The following defines the version and build number for your application.
@@ -87,7 +87,6 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
     - assets/placeholder.jpg
-    - assets/colorful-toothed-wheels.jpg
-    - assets/mfilm.png
+    - assets/netfilm.png
     - i18n/en.json
     - i18n/pl.json

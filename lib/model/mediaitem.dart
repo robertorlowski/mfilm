@@ -1,5 +1,5 @@
-import 'package:mfilm/model/move.dart';
-import 'package:mfilm/util/utils.dart';
+import 'package:netfilm/model/move.dart';
+import 'package:netfilm/util/utils.dart';
 
 enum MediaType { video, show, db }
 enum MovieType { CDA }

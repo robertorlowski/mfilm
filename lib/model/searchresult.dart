@@ -1,6 +1,6 @@
-import 'package:mfilm/model/cast.dart';
-import 'package:mfilm/model/mediaitem.dart';
-import 'package:mfilm/util/utils.dart';
+import 'package:netfilm/model/cast.dart';
+import 'package:netfilm/model/mediaitem.dart';
+import 'package:netfilm/util/utils.dart';
 
 class SearchResult {
   String _mediaType;

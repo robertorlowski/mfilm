@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mfilm/model/video.dart';
+import 'package:netfilm/model/video.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class TrailerCard extends StatefulWidget {

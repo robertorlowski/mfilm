@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
-import 'package:mfilm/model/genres.dart';
-import 'package:mfilm/model/mediaitem.dart';
+import 'package:netfilm/model/genres.dart';
+import 'package:netfilm/model/mediaitem.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:ui' as ui;
 

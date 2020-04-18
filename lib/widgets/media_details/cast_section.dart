@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mfilm/model/cast.dart';
-import 'package:mfilm/util/mediaproviders.dart';
-import 'package:mfilm/widgets/media_details/cast_card.dart';
+import 'package:netfilm/model/cast.dart';
+import 'package:netfilm/util/mediaproviders.dart';
+import 'package:netfilm/widgets/media_details/cast_card.dart';
 
 class CastSection extends StatelessWidget {
   final List<Actor> _cast;

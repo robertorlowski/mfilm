@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mfilm/model/cast.dart';
-import 'package:mfilm/model/mediaitem.dart';
-import 'package:mfilm/util/api_client.dart';
-import 'package:mfilm/util/mediaproviders.dart';
-import 'package:mfilm/util/styles.dart';
-import 'package:mfilm/widgets/component/fitted_circle_avatar.dart';
-import 'package:mfilm/widgets/media_list/media_list_item.dart';
+import 'package:netfilm/model/cast.dart';
+import 'package:netfilm/model/mediaitem.dart';
+import 'package:netfilm/util/api_client.dart';
+import 'package:netfilm/util/mediaproviders.dart';
+import 'package:netfilm/util/styles.dart';
+import 'package:netfilm/widgets/component/fitted_circle_avatar.dart';
+import 'package:netfilm/widgets/media_list/media_list_item.dart';
 
 class ActorDetailScreen extends StatelessWidget {
   final Actor _actor;

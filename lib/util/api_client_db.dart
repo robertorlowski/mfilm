@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:intl/intl.dart';
-import 'package:mfilm/model/cast.dart';
-import 'package:mfilm/model/genres.dart';
-import 'package:mfilm/model/mediaitem.dart';
-import 'package:mfilm/model/video.dart';
-import 'package:mfilm/model/searchresult.dart';
-import 'package:mfilm/util/db_mongo.dart';
-import 'package:mfilm/util/constants.dart';
+import 'package:netfilm/model/cast.dart';
+import 'package:netfilm/model/genres.dart';
+import 'package:netfilm/model/mediaitem.dart';
+import 'package:netfilm/model/video.dart';
+import 'package:netfilm/model/searchresult.dart';
+import 'package:netfilm/util/db_mongo.dart';
+import 'package:netfilm/util/constants.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:mongo_dart_query/mongo_dart_query.dart';
 

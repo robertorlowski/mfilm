@@ -1,4 +1,4 @@
-import 'package:mfilm/util/utils.dart';
+import 'package:netfilm/util/utils.dart';
 
 class Actor {
   String character;

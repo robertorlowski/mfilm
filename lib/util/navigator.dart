@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mfilm/model/cast.dart';
-import 'package:mfilm/model/mediaitem.dart';
-import 'package:mfilm/model/move.dart';
-import 'package:mfilm/util/utils.dart';
-import 'package:mfilm/widgets/actor_detail/actor_detail.dart';
-import 'package:mfilm/widgets/media_details/media_detail.dart';
-import 'package:mfilm/widgets/favorite/favorite_screen.dart';
-import 'package:mfilm/widgets/play/play_screen.dart';
-import 'package:mfilm/widgets/search/search_page.dart';
+import 'package:netfilm/model/cast.dart';
+import 'package:netfilm/model/mediaitem.dart';
+import 'package:netfilm/model/move.dart';
+import 'package:netfilm/util/utils.dart';
+import 'package:netfilm/widgets/actor_detail/actor_detail.dart';
+import 'package:netfilm/widgets/media_details/media_detail.dart';
+import 'package:netfilm/widgets/favorite/favorite_screen.dart';
+import 'package:netfilm/widgets/play/play_screen.dart';
+import 'package:netfilm/widgets/search/search_page.dart';
 
 import 'mediaproviders.dart';
 

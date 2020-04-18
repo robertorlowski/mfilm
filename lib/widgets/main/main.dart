@@ -1,17 +1,20 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:mfilm/i18/app_localizations.dart';
-import 'package:mfilm/model/app_model.dart';
-import 'package:mfilm/model/genres.dart';
-import 'package:mfilm/model/mediaitem.dart';
-import 'package:mfilm/util/mediaproviders.dart';
-import 'package:mfilm/util/navigator.dart';
-import 'package:mfilm/util/styles.dart';
-import 'package:mfilm/util/utils.dart';
-import 'package:mfilm/widgets/main/main_rows.dart';
-import 'package:mfilm/widgets/main/main_col.dart';
+import 'package:netfilm/i18/app_localizations.dart';
+import 'package:netfilm/model/app_model.dart';
+import 'package:netfilm/model/genres.dart';
+import 'package:netfilm/model/mediaitem.dart';
+import 'package:netfilm/util/mediaproviders.dart';
+import 'package:netfilm/util/navigator.dart';
+import 'package:netfilm/util/styles.dart';
+import 'package:netfilm/util/utils.dart';
+import 'package:netfilm/widgets/main/main_rows.dart';
+import 'package:netfilm/widgets/main/main_col.dart';
 import 'package:scoped_model/scoped_model.dart';
+
+import '../../util/constants.dart';
+import '../../util/styles.dart';
 
 enum TypeView { ROW, COL }
 
@@ -67,7 +70,7 @@ class MainPageState extends State<MainPage> {
           onPressed: () => goToSearch(context, _getProvider()),
         )
       ],
-      title: Text("mFilm"),
+      title: Text("netFilm"),
     );
   }
 
@@ -76,9 +79,21 @@ class MainPageState extends State<MainPage> {
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-              //decoration: BoxDecoration(color: primary),
-              padding: const EdgeInsets.all(0.0),
-              child: Image(image: AssetImage('assets/mfilm.png'))),
+            padding: EdgeInsets.only(top: 5),
+            //decoration: BoxDecoration(color: primary),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Image(height: 130, image: AssetImage('assets/netfilm.png')),
+                  GestureDetector(
+                    onTap: () => launchUrl(NETFILM_URL),
+                    child: Text(
+                      NETFILM_URL,
+                      style: TextStyle(color: Colors.blue, fontSize: 20.0),
+                    ),
+                  ),
+                ]),
+          ),
           ListTile(
             title: Text(AppLocalizations.of(context).translate("movies"),
                 style: TextStyle(

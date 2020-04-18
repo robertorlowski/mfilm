@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mfilm/i18/app_localizations.dart';
-import 'package:mfilm/model/genres.dart';
-import 'package:mfilm/model/mediaitem.dart';
-import 'package:mfilm/util/mediaproviders.dart';
-import 'package:mfilm/util/utils.dart';
-import 'package:mfilm/widgets/media_list_small/media_list_small.dart';
+import 'package:netfilm/i18/app_localizations.dart';
+import 'package:netfilm/model/genres.dart';
+import 'package:netfilm/model/mediaitem.dart';
+import 'package:netfilm/util/mediaproviders.dart';
+import 'package:netfilm/util/utils.dart';
+import 'package:netfilm/widgets/media_list_small/media_list_small.dart';
 
 class MainRowsWidget extends StatefulWidget {
   final MediaProvider _provider;

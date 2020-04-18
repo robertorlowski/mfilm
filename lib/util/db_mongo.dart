@@ -1,5 +1,7 @@
-import 'package:mfilm/util/constants.dart';
+import 'package:netfilm/util/constants.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db;
+
+import 'constants.dart';
 
 class DBConnection {
   static DBConnection _instance;

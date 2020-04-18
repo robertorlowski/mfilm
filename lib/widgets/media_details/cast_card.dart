@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mfilm/model/cast.dart';
-import 'package:mfilm/util/mediaproviders.dart';
-import 'package:mfilm/util/navigator.dart';
-import 'package:mfilm/util/styles.dart';
-import 'package:mfilm/widgets/component/bottom_gradient.dart';
+import 'package:netfilm/model/cast.dart';
+import 'package:netfilm/util/mediaproviders.dart';
+import 'package:netfilm/util/navigator.dart';
+import 'package:netfilm/util/styles.dart';
+import 'package:netfilm/widgets/component/bottom_gradient.dart';
 
 class CastCard extends StatelessWidget {
   final double height;
