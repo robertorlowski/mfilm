@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="m-film"
+        android:label="net-Film"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
