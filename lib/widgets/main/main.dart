@@ -76,132 +76,150 @@ class MainPageState extends State<MainPage> {
 
   Widget prepareDrawer(String sortBy) {
     return Drawer(
-      child: ListView(
-        children: <Widget>[
-          DrawerHeader(
-            padding: EdgeInsets.only(top: 5),
-            //decoration: BoxDecoration(color: primary),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Image(height: 130, image: AssetImage('assets/netfilm.png')),
-                  GestureDetector(
-                    onTap: () => launchUrl(NETFILM_URL),
-                    child: Text(
-                      NETFILM_URL,
-                      style: TextStyle(color: Colors.blue, fontSize: 20.0),
-                    ),
-                  ),
-                ]),
-          ),
-          ListTile(
-            title: Text(AppLocalizations.of(context).translate("movies"),
-                style: TextStyle(
-                    fontSize: 16.0,
-                    color: (mediaType == MediaType.db)
-                        ? Theme.of(context).accentColor
-                        : Theme.of(context).textTheme.subhead.color)),
-            selected: mediaType == MediaType.db,
-            trailing: Icon(Icons.local_movies,
-                color: (mediaType == MediaType.db)
-                    ? Theme.of(context).accentColor
-                    : Theme.of(context).textTheme.subhead.color),
-            onTap: () {
-              _changeMediaType(MediaType.db);
-              Navigator.of(context).pop();
-            },
-          ),
-          ListTile(
-            title: Text(AppLocalizations.of(context).translate("trailers"),
-                style: TextStyle(
-                    fontSize: 16.0,
-                    color: (mediaType == MediaType.video)
-                        ? Theme.of(context).accentColor
-                        : Theme.of(context).textTheme.subhead.color)),
-            selected: mediaType == MediaType.video,
-            trailing: Icon(Icons.local_movies,
-                color: (mediaType == MediaType.video)
-                    ? Theme.of(context).accentColor
-                    : Theme.of(context).textTheme.subhead.color),
-            onTap: () {
-              _changeMediaType(MediaType.video);
-              Navigator.of(context).pop();
-            },
-          ),
-          Divider(
-            height: 5.0,
-          ),
-          _typeView == TypeView.COL
-              ? new Container(width: 0, height: 0)
-              : ListTile(
-                  title: Text(
-                      AppLocalizations.of(context).translate("settings"),
-                      style: TextStyle(
-                          fontSize: 16.0,
-                          color: Theme.of(context).textTheme.subhead.color)),
-                  subtitle: Row(
-                    //crossAxisAlignm
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+      children: <Widget>[
+        Expanded(
+          child: ListView(
+            children: <Widget>[
+              DrawerHeader(
+                padding: EdgeInsets.only(top: 5),
+                //decoration: BoxDecoration(color: primary),
+                child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text(AppLocalizations.of(context).translate("sort_by"),
+                      Image(
+                          height: 130, image: AssetImage('assets/netfilm.png')),
+                      GestureDetector(
+                        onTap: () => launchUrl(NETFILM_URL),
+                        child: Text(
+                          NETFILM_URL,
+                          style: TextStyle(color: Colors.blue, fontSize: 20.0),
+                        ),
+                      ),
+                    ]),
+              ),
+              ListTile(
+                title: Text(AppLocalizations.of(context).translate("movies"),
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        color: (mediaType == MediaType.db)
+                            ? Theme.of(context).accentColor
+                            : Theme.of(context).textTheme.subhead.color)),
+                selected: mediaType == MediaType.db,
+                trailing: Icon(Icons.local_movies,
+                    color: (mediaType == MediaType.db)
+                        ? Theme.of(context).accentColor
+                        : Theme.of(context).textTheme.subhead.color),
+                onTap: () {
+                  _changeMediaType(MediaType.db);
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                title: Text(AppLocalizations.of(context).translate("trailers"),
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        color: (mediaType == MediaType.video)
+                            ? Theme.of(context).accentColor
+                            : Theme.of(context).textTheme.subhead.color)),
+                selected: mediaType == MediaType.video,
+                trailing: Icon(Icons.local_movies,
+                    color: (mediaType == MediaType.video)
+                        ? Theme.of(context).accentColor
+                        : Theme.of(context).textTheme.subhead.color),
+                onTap: () {
+                  _changeMediaType(MediaType.video);
+                  Navigator.of(context).pop();
+                },
+              ),
+              Divider(
+                height: 5.0,
+              ),
+              _typeView == TypeView.COL
+                  ? new Container(width: 0, height: 0)
+                  : ListTile(
+                      title: Text(
+                          AppLocalizations.of(context).translate("settings"),
                           style: TextStyle(
                               fontSize: 16.0,
                               color:
                                   Theme.of(context).textTheme.subhead.color)),
-                      Container(
-                          height: 25,
-                          width: 200,
-                          child: ScopedModelDescendant<AppModel>(
-                            builder: (context, child, AppModel model) =>
-                                DropdownButton<String>(
-                                    value: sortBy,
-                                    isDense: true,
-                                    isExpanded: true,
-                                    icon: Icon(Icons.arrow_downward),
-                                    iconSize: 24,
-                                    style: TextStyle(color: Colors.white),
-                                    underline: Container(
-                                      height: 1,
-                                      color: Colors.white54,
-                                    ),
-                                    onChanged: (String newValue) {
-                                      model.defaultSortBy = newValue;
-                                      _changeMediaType(mediaType);
-                                      Navigator.of(context).pop();
-                                    },
-                                    items: moveSortBy
-                                        .map<DropdownMenuItem<String>>((ooo) {
-                                      return DropdownMenuItem<String>(
-                                          value: ooo,
-                                          child: Text(
-                                              AppLocalizations.of(context)
-                                                  .translate(ooo)));
-                                    }).toList()),
-                          )),
-                    ],
-                  ),
+                      subtitle: Row(
+                        //crossAxisAlignm
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                              AppLocalizations.of(context).translate("sort_by"),
+                              style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .subhead
+                                      .color)),
+                          Container(
+                              height: 25,
+                              width: 200,
+                              child: ScopedModelDescendant<AppModel>(
+                                builder: (context, child, AppModel model) =>
+                                    DropdownButton<String>(
+                                        value: sortBy,
+                                        isDense: true,
+                                        isExpanded: true,
+                                        icon: Icon(Icons.arrow_downward),
+                                        iconSize: 24,
+                                        style: TextStyle(color: Colors.white),
+                                        underline: Container(
+                                          height: 1,
+                                          color: Colors.white54,
+                                        ),
+                                        onChanged: (String newValue) {
+                                          model.defaultSortBy = newValue;
+                                          _changeMediaType(mediaType);
+                                          Navigator.of(context).pop();
+                                        },
+                                        items: moveSortBy
+                                            .map<DropdownMenuItem<String>>(
+                                                (ooo) {
+                                          return DropdownMenuItem<String>(
+                                              value: ooo,
+                                              child: Text(
+                                                  AppLocalizations.of(context)
+                                                      .translate(ooo)));
+                                        }).toList()),
+                              )),
+                        ],
+                      ),
+                    ),
+              _typeView == TypeView.COL
+                  ? new Container(width: 0, height: 0)
+                  : Divider(
+                      height: 5.0,
+                    ),
+              ListTile(
+                title: Text(
+                  AppLocalizations.of(context).translate("close_app"),
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      color: Theme.of(context).textTheme.subhead.color),
                 ),
-          _typeView == TypeView.COL
-              ? new Container(width: 0, height: 0)
-              : Divider(
-                  height: 5.0,
-                ),
-          ListTile(
-            title: Text(
-              AppLocalizations.of(context).translate("close_app"),
-              style: TextStyle(
-                  fontSize: 16.0,
-                  color: Theme.of(context).textTheme.subhead.color),
-            ),
-            trailing: Icon(Icons.close,
-                color: Theme.of(context).textTheme.subhead.color),
-            onTap: () => exit(0),
-          )
-        ],
-      ),
-    );
+                trailing: Icon(Icons.close,
+                    color: Theme.of(context).textTheme.subhead.color),
+                onTap: () => exit(0),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          child: Image(
+              height: 20, width: 154, image: AssetImage('assets/tmdb.png')),
+        ),
+        Divider(
+          height: 10.0,
+        ),
+      ],
+    ));
   }
 
   @override

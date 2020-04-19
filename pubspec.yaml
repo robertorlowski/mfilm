@@ -88,5 +88,6 @@ flutter:
   assets:
     - assets/placeholder.jpg
     - assets/netfilm.png
+    - assets/tmdb.png
     - i18n/en.json
     - i18n/pl.json

@@ -50,8 +50,8 @@ class ActorDetailScreen extends StatelessWidget {
               Hero(
                   tag: 'Cast-Hero-${actor.id}',
                   child: Container(
-                    width: 160.0,
-                    height: 160.0,
+                    width: 180.0,
+                    height: 180.0,
                     child: FittedCircleAvatar(
                       backgroundImage: NetworkImage(actor.profilePictureUrl),
                     ),
