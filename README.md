@@ -1,4 +1,5 @@
 # net-Film
+Flutter application using The Movie Database API.
 
 ![](screenshot/screenshot_all.jpg)
 
