@@ -54,7 +54,7 @@ class FittedCircleAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(debugCheckHasMediaQuery(context));
     final ThemeData theme = Theme.of(context);
-    TextStyle textStyle = theme.primaryTextTheme.title;
+    TextStyle textStyle = theme.primaryTextTheme.headline6;
     if (foregroundColor != null) {
       textStyle = textStyle.copyWith(color: foregroundColor);
     } else if (backgroundColor != null) {

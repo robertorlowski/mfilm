@@ -6,7 +6,7 @@ import 'package:netfilm/model/mediaitem.dart';
 import 'package:netfilm/model/searchresult.dart';
 import 'package:netfilm/model/video.dart';
 import 'package:netfilm/util/api_client.dart';
-import 'package:netfilm/util/api_client_db.dart';
+import 'package:netfilm/util/api_client_net.dart';
 
 abstract class MediaProvider {
   Future<List<MediaItem>> loadMedia(String category, {int page: 1});
@@ -32,7 +32,8 @@ class MovieProviderDb extends MediaProvider {
 
   MovieProviderDb(this._language);
 
-  ApiClientDb _apiClient = ApiClientDb();
+  //ApiClientDb _apiClient = ApiClientDb();
+  ApiClientNet _apiClient = ApiClientNet();
 
   @override
   Future<List<MediaItem>> loadMedia(String category, {int page: 1}) {

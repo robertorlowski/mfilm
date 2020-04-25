@@ -104,12 +104,12 @@ class MainPageState extends State<MainPage> {
                         fontSize: 16.0,
                         color: (mediaType == MediaType.db)
                             ? Theme.of(context).accentColor
-                            : Theme.of(context).textTheme.subhead.color)),
+                            : Theme.of(context).textTheme.subtitle1.color)),
                 selected: mediaType == MediaType.db,
                 trailing: Icon(Icons.local_movies,
                     color: (mediaType == MediaType.db)
                         ? Theme.of(context).accentColor
-                        : Theme.of(context).textTheme.subhead.color),
+                        : Theme.of(context).textTheme.subtitle1.color),
                 onTap: () {
                   _changeMediaType(MediaType.db);
                   Navigator.of(context).pop();
@@ -121,12 +121,12 @@ class MainPageState extends State<MainPage> {
                         fontSize: 16.0,
                         color: (mediaType == MediaType.video)
                             ? Theme.of(context).accentColor
-                            : Theme.of(context).textTheme.subhead.color)),
+                            : Theme.of(context).textTheme.subtitle1.color)),
                 selected: mediaType == MediaType.video,
                 trailing: Icon(Icons.local_movies,
                     color: (mediaType == MediaType.video)
                         ? Theme.of(context).accentColor
-                        : Theme.of(context).textTheme.subhead.color),
+                        : Theme.of(context).textTheme.subtitle1.color),
                 onTap: () {
                   _changeMediaType(MediaType.video);
                   Navigator.of(context).pop();
@@ -143,7 +143,7 @@ class MainPageState extends State<MainPage> {
                           style: TextStyle(
                               fontSize: 16.0,
                               color:
-                                  Theme.of(context).textTheme.subhead.color)),
+                                  Theme.of(context).textTheme.subtitle1.color)),
                       subtitle: Row(
                         //crossAxisAlignm
                         mainAxisSize: MainAxisSize.max,
@@ -156,7 +156,7 @@ class MainPageState extends State<MainPage> {
                                   fontSize: 16.0,
                                   color: Theme.of(context)
                                       .textTheme
-                                      .subhead
+                                      .subtitle1
                                       .color)),
                           Container(
                               height: 25,
@@ -202,10 +202,10 @@ class MainPageState extends State<MainPage> {
                   AppLocalizations.of(context).translate("close_app"),
                   style: TextStyle(
                       fontSize: 16.0,
-                      color: Theme.of(context).textTheme.subhead.color),
+                      color: Theme.of(context).textTheme.subtitle1.color),
                 ),
                 trailing: Icon(Icons.close,
-                    color: Theme.of(context).textTheme.subhead.color),
+                    color: Theme.of(context).textTheme.subtitle1.color),
                 onTap: () => exit(0),
               ),
             ],
