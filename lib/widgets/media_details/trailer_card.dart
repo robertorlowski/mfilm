@@ -27,7 +27,7 @@ class TrailerCardState extends State<TrailerCard> {
           disableDragSeek: true,
           loop: false,
           isLive: false,
-          forceHideAnnotation: true,
+          forceHideAnnotation: false,
           forceHD: false,
           enableCaption: true,
         ))

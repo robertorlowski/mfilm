@@ -30,7 +30,7 @@ class MediaListItem extends StatelessWidget {
                               softWrap: false,
                               style: Theme.of(context)
                                   .textTheme
-                                  .subtitle1
+                                  .subhead
                                   .copyWith(
                                       color: Colors.grey[200], fontSize: 17)),
                         ),
