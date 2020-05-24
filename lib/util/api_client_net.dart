@@ -17,7 +17,7 @@ class ApiClientNet {
   ApiClientNet._internal();
 
   final String baseUrl = 'api.themoviedb.org';
-  final String netUrl = '91.192.2.140:9000';
+  final String netUrl = 'netfilm.netlify.app';
 
   factory ApiClientNet() => _client;
 
@@ -41,7 +41,7 @@ class ApiClientNet {
 
   Future<List<MediaItem>> fetchMovies(
       {int page: 1, String category: "popularity"}) async {
-    var url = Uri.https(netUrl, 'netfilm/fetchMovies',
+    var url = Uri.https(netUrl, 'api/netfilm/fetchMovies',
         {'page': page.toString(), 'category': category});
 
     return _getJson(url, apiKey: NET_API_KEY).then((data) => data
@@ -52,7 +52,7 @@ class ApiClientNet {
 
   Future<List<MediaItem>> getMoviesForGenreIDs(
       {int page: 1, sortBy: "", List<int> genreIDs}) async {
-    var url = Uri.https(netUrl, '/netfilm/fetchMoviesForGenres', {
+    var url = Uri.https(netUrl, 'api/netfilm/fetchMoviesForGenres', {
       'page': page.toString(),
       'category': sortBy,
       'genres': getGenreIDs(genreIDs)
@@ -65,7 +65,8 @@ class ApiClientNet {
   }
 
   Future<List<SearchResult>> getSearchResults(String query) async {
-    var url = Uri.https(netUrl, '/netfilm/fetchSearchMovies', {'title': query});
+    var url =
+        Uri.https(netUrl, 'api/netfilm/fetchSearchMovies', {'title': query});
 
     List<SearchResult> resultList = [];
 
